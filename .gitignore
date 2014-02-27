@@ -4,3 +4,4 @@
 vendor/*
 app/cache
 composer.lock
+config/database.php
