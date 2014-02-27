@@ -1,0 +1,6 @@
+.project
+.settings/*
+.buildpath
+vendor/*
+app/cache
+composer.lock

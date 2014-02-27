@@ -1,0 +1,20 @@
+{
+    "name": "sm-dash application",
+    "description": "Dashboard application for social media accounts",
+    "version": "0.1",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Mahendra Rai"
+        }
+    ],
+    "require": {
+        "slim/slim": "2.*",
+        "j4mie/idiorm": "1.4.*",
+        "j4mie/paris": "1.4.*",
+        "twig/twig": "1.15.*@dev",
+        "slim/views": "0.1.*",
+        "frizzy/less-slim-middleware": "dev-master",
+        "j7mbo/twitter-api-php": "dev-master"
+    }
+}
