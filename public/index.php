@@ -24,6 +24,7 @@ $view->parserOptions = array(
 $view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
     new Twig_Extension_Debug(),
+    new Twig_Extension_TwitterHelper()
 );
 
 require '../app/routes/index.php';

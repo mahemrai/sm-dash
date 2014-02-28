@@ -30,7 +30,7 @@ class Twitter {
         foreach($tweets as $tweet) {
             $data_item = array(
                 'created_at' => $tweet->created_at,
-                'text' => utf8_encode($tweet->text),
+                'text' => $tweet->text,
                 'user' => $tweet->user,
                 'retweet_count' => $tweet->retweet_count,
                 'favorite_count' => $tweet->favorite_count,
