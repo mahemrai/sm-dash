@@ -5,8 +5,8 @@ require '../app/helpers/TwitterHelper.php';
 
 //Slim app configuration
 $app = new \Slim\Slim(array(
-	'templates.path' => '../app/views',
-	'view' => new \Slim\Views\Twig(),
+    'templates.path' => '../app/views',
+    'view' => new \Slim\Views\Twig(),
 ));
 
 
