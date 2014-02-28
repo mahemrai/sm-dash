@@ -1,5 +1,5 @@
 <h1>Home</h1>
 
 {% for tweet in tweets %}
-    <p>{{ tweet.text }}</p>
+    {{ processHashtags(tweet.text, tweet.entities) }}
 {% endfor %}

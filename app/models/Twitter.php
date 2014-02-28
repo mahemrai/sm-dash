@@ -1,5 +1,4 @@
 <?php
-require '../app/utils/TwitterResponseManipulator.php';
 
 /**
  * Twitter class
@@ -35,14 +34,13 @@ class Twitter {
                 'user' => $tweet->user,
                 'retweet_count' => $tweet->retweet_count,
                 'favorite_count' => $tweet->favorite_count,
-                //'entities' => $tweet->entities
-                'entities' => array(
-                    'hashtags' => TwitterResponseManipulator::processHashtags($tweet->entities),
-                )
+                'entities' => $tweet->entities
             );
+
+            array_push($this->data, $data_item);
         }
-        die;
-        //return $this->data;
+        
+        return $this->data;
 	}
 
     /**

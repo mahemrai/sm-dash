@@ -6,12 +6,9 @@ $app->get('/', function() use ($app) {
 	$tweets = $twitter->getHomeTimeline();
 
 	$view_data = array(
-		'$tweets' => $tweets
+		'tweets' => $tweets
 	);
 	
-	$app->render(
-		'home.html.twig', 
-		$view_data
-	);
+	$app->render('home.html.twig', $view_data);
 });
 ?>
