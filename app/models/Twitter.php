@@ -52,9 +52,22 @@ class Twitter {
 		$request_method = 'GET';
 
 		$client = new TwitterApiExchange($this->settings);
-		$response = json_decode($client->buildOauth($url, $request_method)->performRequest());
+		$tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
 
-        return $response;
+        foreach($tweets as $tweet) {
+            $data_item = array(
+                'created_at' => $tweet->created_at,
+                'text' => $tweet->text,
+                'user' => $tweet->user,
+                'retweet_count' => $tweet->retweet_count,
+                'favorite_count' => $tweet->favorite_count,
+                'entities' => $tweet->entities
+            );
+
+            array_push($this->data, $data_item);
+        }
+
+        return $this->data;
 	}
 
     /**

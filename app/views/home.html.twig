@@ -1,5 +1,9 @@
 <h1>Home</h1>
 
 {% for tweet in tweets %}
-    {{ display_tweet(tweet.text, tweet.entities) }}
+    <div>
+        {{ display_tweet(tweet.text, tweet.entities) }}
+        {{ tweet.created_at | date('Y-m-d') }}
+        <a href="http://twitter.com/{{ tweet.user.screen_name }}">{{ tweet.user.name }}</a>
+    </div>
 {% endfor %}

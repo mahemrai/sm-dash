@@ -33,13 +33,13 @@ function displayTweet($text, $entities) {
 }
 
 function replaceUrls($text, $entity) {
-    $manipulated_string = '';
+    $manipulated_string = $text;
 
     foreach($entity as $item) {
-        $manipulated_string = str_replace(
+        $manipulated_string = str_ireplace(
             $item->url, 
             '<a href="'.$item->expanded_url.'">'.$item->display_url.'</a>', 
-            $text
+            $manipulated_string
         );
     }
 
@@ -47,13 +47,13 @@ function replaceUrls($text, $entity) {
 }
 
 function replaceHashtags($text, $entity) {
-    $manipulated_string = '';
+    $manipulated_string = $text;
 
     foreach($entity as $item) {
-        $manipulated_string = str_replace(
+        $manipulated_string = str_ireplace(
             '#'.$item->text, 
             '<a href="http://twitter.com/search?q=%23'.$item->text.'&src=hash">#'.$item->text.'</a>', 
-            $text
+            $manipulated_string
         );
     }
 
@@ -61,27 +61,29 @@ function replaceHashtags($text, $entity) {
 }
 
 function replaceUserMentions($text, $entity) {
-    $manipulated_string = '';
+    $manipulated_string = $text;
 
     foreach($entity as $item) {
-        $manipulated_string = str_replace(
+        $manipulated_string = str_ireplace(
             '@'.$item->screen_name,
             '<a href="http://twitter.com/'.$item->screen_name.'">@'.$item->screen_name.'</a>',
             $text
         );
+
+        $text = $manipulated_string;
     }
 
     return $manipulated_string;
 }
 
 function replaceMedias($text, $entity) {
-    $manipulated_string = '';
+    $manipulated_string = $text;
 
     foreach($entity as $item) {
-        $manipulated_string = str_replace(
+        $manipulated_string = str_ireplace(
             $item->url,
             '<a href="'.$item->media_url.'">'.$item->display_url.'</a>',
-            $text
+            $manipulated_string
         );
     }
 
