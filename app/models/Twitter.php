@@ -30,7 +30,7 @@ class Twitter {
         foreach($tweets as $tweet) {
             $data_item = array(
                 'created_at' => $tweet->created_at,
-                'text' => $tweet->text,
+                'text' => $this->selectTweetContent($tweet),
                 'user' => $tweet->user,
                 'retweet_count' => $tweet->retweet_count,
                 'favorite_count' => $tweet->favorite_count,
@@ -71,6 +71,27 @@ class Twitter {
     }
 
     /**
+     * Description
+     * @return type
+     */
+    public function postRetweet($tweet_id) {
+        $url = 'https://api.twitter.com/1.1/statuses/retweet/'.$tweet_id.'.json';
+        $request_method = 'POST';
+
+        $client = new TwitterApiExchange($this->settings);
+        $response = json_decode($client->buildOauth($url, $request_method)->performRequest());
+
+        return $response;
+    }
+
+    public function postFavorite() {
+        $url = 'https://api.twitter.com/1.1/statuses/favorite/';
+        $request_method = 'POST';
+
+        $client = new TwitterApiExchange($this->settings);
+    }
+
+    /**
      * Retrieve api information from the database.
      * @return array
      */
@@ -86,6 +107,17 @@ class Twitter {
             'consumer_key' => $api_info['api_key'],
             'consumer_secret' => $api_info['api_secret']
         );
+    }
+
+    /**
+     * Determine whether the selected tweet is a retweeted status or not and return 
+     * appropriate content.
+     * @param object $tweet 
+     * @return string
+     */
+    protected function selectTweetContent($tweet) {
+        return (isset($tweet->retweeted_status)) ? 
+            $tweet->retweeted_status->text : $tweet->text;
     }
 }
 ?>

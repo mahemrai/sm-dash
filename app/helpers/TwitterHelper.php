@@ -1,4 +1,10 @@
 <?php
+/**
+ * Twig_Extension_TwitterHelper class
+ * @package helpers
+ * @author Mahendra Rai
+ */
+
 class Twig_Extension_TwitterHelper extends Twig_Extension {
     public function getFunctions() {
         return array(
@@ -11,6 +17,12 @@ class Twig_Extension_TwitterHelper extends Twig_Extension {
     }
 }
 
+/**
+ * Replace entities in the tweet with url and display it.
+ * @param string $text 
+ * @param type $entities 
+ * @return string
+ */
 function displayTweet($text, $entities) {
     $text = $text;
 
@@ -32,6 +44,12 @@ function displayTweet($text, $entities) {
     echo '<p>'.$text.'</p>';
 }
 
+/**
+ * Replace url entities.
+ * @param string $text 
+ * @param type $entity 
+ * @return string
+ */
 function replaceUrls($text, $entity) {
     $manipulated_string = $text;
 
@@ -46,6 +64,12 @@ function replaceUrls($text, $entity) {
     return $manipulated_string;
 }
 
+/**
+ * Replace hashtag entities.
+ * @param string $text 
+ * @param type $entity 
+ * @return string
+ */
 function replaceHashtags($text, $entity) {
     $manipulated_string = $text;
 
@@ -60,6 +84,12 @@ function replaceHashtags($text, $entity) {
     return $manipulated_string;
 }
 
+/**
+ * Replace usermention entities.
+ * @param string $text 
+ * @param type $entity 
+ * @return string
+ */
 function replaceUserMentions($text, $entity) {
     $manipulated_string = $text;
 
@@ -76,6 +106,12 @@ function replaceUserMentions($text, $entity) {
     return $manipulated_string;
 }
 
+/**
+ * Replace media entities.
+ * @param string $text 
+ * @param type $entity 
+ * @return string
+ */
 function replaceMedias($text, $entity) {
     $manipulated_string = $text;
 
@@ -85,6 +121,8 @@ function replaceMedias($text, $entity) {
             '<a href="'.$item->media_url.'">'.$item->display_url.'</a>',
             $manipulated_string
         );
+
+        $manipulated_string .= '<img src="'.$item->media_url.'"/>';
     }
 
     return $manipulated_string;

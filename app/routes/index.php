@@ -1,4 +1,7 @@
 <?php
+/**
+ * Load main page.
+ */
 $app->get('/', function() use ($app) {
     require '../app/models/Twitter.php';
 
