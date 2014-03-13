@@ -22,7 +22,7 @@ class Twitter {
      */
     public function getHomeTimeline() {
         $url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
-	$request_method = 'GET';
+	    $request_method = 'GET';
 
         $client = new TwitterApiExchange($this->settings);
         $tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());

@@ -5,4 +5,4 @@ vendor/*
 app/cache
 composer.lock
 config/database.php
-bower_components/*
+node_modules/*

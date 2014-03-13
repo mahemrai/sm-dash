@@ -1,19 +1,24 @@
 {% extends "layout/layout.html.twig" %}
 
-{% block content %}
+{% block twitter %}
 <h1>Home</h1>
 
 {% for tweet in tweets %}
-    <div id="tweet">
+    <div class="well">
         <p>
             <img src="{{ tweet.user.profile_image_url }}"/>
             <a href="http://twitter.com/{{ tweet.user.screen_name }}">{{ tweet.user.name }}</a>
         </p>
+
         {{ display_tweet(tweet.text, tweet.entities) }}
-        <p>{{ tweet.created_at | date('Y-m-d') }}</p>
-        <span>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</span>
-        <a href="#">Retweet</a>
-        <a href="#">Favorite</a>
+
+        <p>{{ tweet.created_at | date('Y-m-d') }}
+        <span>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</span></p>
+
+        <a class="btn btn-primary btn-sm" href="#">Reply</a>
+        <a class="btn btn-primary btn-sm" href="#">Retweet</a>
+        <a class="btn btn-primary btn-sm" href="#">Favorite</a>
     </div>
 {% endfor %}
+
 {% endblock %}

@@ -122,7 +122,7 @@ function replaceMedias($text, $entity) {
             $manipulated_string
         );
 
-        $manipulated_string .= '<img src="'.$item->media_url.'"/>';
+        $manipulated_string .= '<img class="thumbnail" src="'.$item->media_url.'"/>';
     }
 
     return $manipulated_string;

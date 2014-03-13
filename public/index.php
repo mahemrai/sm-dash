@@ -9,7 +9,6 @@ $app = new \Slim\Slim(array(
     'view' => new \Slim\Views\Twig(),
 ));
 
-
 //View configuration
 $view = $app->view();
 $view->parserOptions = array(
