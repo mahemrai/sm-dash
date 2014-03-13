@@ -14,6 +14,7 @@
         "j4mie/paris": "1.4.*",
         "twig/twig": "1.15.*@dev",
         "slim/views": "0.1.*",
-        "j7mbo/twitter-api-php": "dev-master"
+        "j7mbo/twitter-api-php": "dev-master",
+        "oyejorge/less.php": "~1.5"
     }
 }

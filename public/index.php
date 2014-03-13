@@ -26,6 +26,13 @@ $view->parserExtensions = array(
     new Twig_Extension_TwitterHelper()
 );
 
+Less_Autoloader::register();
+
+$parser = new Less_Parser();
+$parser->parseFile('css/styles.less', 'css');
+$css = $parser->getCss();
+file_put_contents('css/styles.css', $css);
+
 require '../app/routes/index.php';
 
 $app->run();
