@@ -15,6 +15,7 @@
         "twig/twig": "1.15.*@dev",
         "slim/views": "0.1.*",
         "j7mbo/twitter-api-php": "dev-master",
-        "oyejorge/less.php": "~1.5"
+        "oyejorge/less.php": "~1.5",
+        "zendframework/zendoauth": "2.0.*@dev"
     }
 }
