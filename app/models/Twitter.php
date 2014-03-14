@@ -10,19 +10,19 @@ class Twitter {
 
     private $settings;
     private $data = array();
-	
+    
     //constructor
     public function __construct() {
         $this->getApiInfo();
     }
 
     /**
-     * Get home line tweets from Twitter.
+     * Get home timeline tweets from Twitter.
      * @return array
      */
     public function getHomeTimeline() {
         $url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
-	    $request_method = 'GET';
+        $request_method = 'GET';
 
         $client = new TwitterApiExchange($this->settings);
         $tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
@@ -48,11 +48,11 @@ class Twitter {
      * @return array
      */
     public function getUserTimeline() {
-	    $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-	    $request_method = 'GET';
+        $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+        $request_method = 'GET';
 
-		$client = new TwitterApiExchange($this->settings);
-		$tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
+        $client = new TwitterApiExchange($this->settings);
+        $tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
 
         foreach($tweets as $tweet) {
             $data_item = array(
