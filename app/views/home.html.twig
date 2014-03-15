@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="col-sm-6">
-    <h1>Home</h1>
+    <h1>Twitter</h1>
 
     {% for tweet in tweets %}
         <div class="well">
@@ -16,14 +16,26 @@
             <p>{{ tweet.created_at | date('Y-m-d') }}
             <span>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</span></p>
 
-            <a class="btn btn-primary btn-sm" href="#">Reply</a>
-            <a class="btn btn-primary btn-sm" href="#">Retweet</a>
-            <a class="btn btn-primary btn-sm" href="#">Favorite</a>
+            <button id="retweet" class="btn btn-primary btn-sm" value="{{ tweet.id }}">Retweet</button>
+            <button id="favorite" class="btn btn-primary btn-sm" value="{{ tweet.id }}">Favorite</button>
         </div>
     {% endfor %}
 </div>
 
 <div class="col-sm-6">
+    <h1>Scoop.it</h1>
+
+    {% for scoop in scoops %}
+        <div class="well">
+            <div class="row">
+                <div class="col-sm-5"><img src="{{ scoop.image }}" /></div>
+                <div class="col-sm-7"><span>{{ scoop.title }}</span></div>
+            </div>
+            <p><span>Reactions: {{ scoop.reactionsCount }} Comments: {{ scoop.commentsCount }} Thanks: {{ scoop.thanksCount }}</span></p>
+
+            <button id="scoopit" class="btn btn-primary btn-sm">Scoop.it!</button>
+        </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

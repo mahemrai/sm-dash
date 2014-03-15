@@ -6,10 +6,10 @@ $app->get('/scoopit/authenticate', function() use ($app) {
 
     if(isset($_GET['oauth_token'])) {
         if(empty($_SESSION['SCOOPIT_ACCESS_TOKEN'])) {
-            $scoopit->access();
-            $app->redirect('/sm-dash/public');
+            $scoopit->getAccessToken();
+            $app->redirect('/');
         }
-        else $app->redirect('/sm-dash/public');
+        else $app->redirect('/');
     }
     else{
         $scoopit->authorise();

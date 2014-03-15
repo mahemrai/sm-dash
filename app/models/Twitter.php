@@ -27,18 +27,7 @@ class Twitter {
         $client = new TwitterApiExchange($this->settings);
         $tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
 
-        foreach($tweets as $tweet) {
-            $data_item = array(
-                'created_at' => $tweet->created_at,
-                'text' => $this->selectTweetContent($tweet),
-                'user' => $tweet->user,
-                'retweet_count' => $tweet->retweet_count,
-                'favorite_count' => $tweet->favorite_count,
-                'entities' => $tweet->entities
-            );
-
-            array_push($this->data, $data_item);
-        }
+        $this->prepareResult($tweets);
         
         return $this->data;
     }
@@ -54,18 +43,7 @@ class Twitter {
         $client = new TwitterApiExchange($this->settings);
         $tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
 
-        foreach($tweets as $tweet) {
-            $data_item = array(
-                'created_at' => $tweet->created_at,
-                'text' => $tweet->text,
-                'user' => $tweet->user,
-                'retweet_count' => $tweet->retweet_count,
-                'favorite_count' => $tweet->favorite_count,
-                'entities' => $tweet->entities
-            );
-
-            array_push($this->data, $data_item);
-        }
+        $this->prepareResult($tweets);
 
         return $this->data;
     }
@@ -78,17 +56,40 @@ class Twitter {
         $url = 'https://api.twitter.com/1.1/statuses/retweet/'.$tweet_id.'.json';
         $request_method = 'POST';
 
-        $client = new TwitterApiExchange($this->settings);
-        $response = json_decode($client->buildOauth($url, $request_method)->performRequest());
+        $postfield = array(
+            'id' => $tweet_id
+        );
 
-        return $response;
+        $client = new TwitterApiExchange($this->settings);
+        $response = json_decode(
+            $client->buildOauth($url, $request_method)
+                   ->setPostfields($postfield)
+                   ->performRequest()
+        );
+
+        return (isset($response->errors)) ? false : true;
     }
 
-    public function postFavorite() {
-        $url = 'https://api.twitter.com/1.1/statuses/favorite/';
+    /**
+     * Description
+     * @return boolean
+     */
+    public function postFavorite($tweet_id) {
+        $url = 'https://api.twitter.com/1.1/favorites/create.json';
         $request_method = 'POST';
 
+        $postfield = array(
+            'id' => $tweet_id
+        );
+
         $client = new TwitterApiExchange($this->settings);
+        $response = json_decode(
+            $client->buildOauth($url, $request_method)
+                   ->setPostfields($postfield)
+                   ->performRequest()
+        );
+
+        return (isset($response->errors)) ? false : true;
     }
 
     /**
@@ -118,6 +119,29 @@ class Twitter {
     protected function selectTweetContent($tweet) {
         return (isset($tweet->retweeted_status)) ? 
             $tweet->retweeted_status->text : $tweet->text;
+    }
+
+    /**
+     * Description
+     * @param type $tweets 
+     * @return type
+     */
+    protected function prepareResult($tweets) {
+        foreach($tweets as $tweet) {
+            $data_item = array(
+                'id' => $tweet->id,
+                'created_at' => $tweet->created_at,
+                'text' => $this->selectTweetContent($tweet),
+                'user' => $tweet->user,
+                'retweet_count' => $tweet->retweet_count,
+                'favorite_count' => $tweet->favorite_count,
+                'entities' => $tweet->entities,
+                'favorited' => $tweet->favorited,
+                'retweeted' => $tweet->retweeted
+            );
+
+            array_push($this->data, $data_item);
+        }
     }
 }
 ?>

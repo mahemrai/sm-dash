@@ -41,6 +41,9 @@ session_start();
 //main application routes
 require '../app/routes/index.php';
 
+//twitter routes
+require '../app/routes/twitter.php';
+
 //scoopit routes
 require '../app/routes/scoopit.php';
 
