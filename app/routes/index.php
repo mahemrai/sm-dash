@@ -33,4 +33,21 @@ $app->get('/', function() use ($app) {
     
     $app->render('home.html.twig', $view_data);
 });
-?>
+
+/**
+ * Load user's twitter timeline feed.
+ */
+$app->get('/twitter', function() use ($app) {
+    require '../app/models/Twitter.php';
+
+    $twitter = new Twitter();
+    $stats = $twitter->getUserStats();
+    $tweets = $twitter->getUserTimeline();
+
+    $view_data = array(
+        'stats' => $stats,
+        'tweets' => $tweets
+    );
+
+    $app->render('twitter.html.twig', $view_data);
+});
