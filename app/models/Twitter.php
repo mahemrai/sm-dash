@@ -10,7 +10,6 @@ class Twitter {
     const USERNAME = 'mahemrai';
 
     private $settings;
-    private $data = array();
     
     //constructor
     public function __construct() {
@@ -28,9 +27,9 @@ class Twitter {
         $client = new TwitterApiExchange($this->settings);
         $tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
 
-        $this->prepareResult($tweets);
+        $data = $this->extractData($tweets);
         
-        return $this->data;
+        return $data;
     }
 
     /**
@@ -44,9 +43,9 @@ class Twitter {
         $client = new TwitterApiExchange($this->settings);
         $tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
 
-        $this->prepareResult($tweets);
+        $data = $this->extractData($tweets);
 
-        return $this->data;
+        return $data;
     }
 
     public function getUserStats() {
@@ -60,7 +59,7 @@ class Twitter {
                    ->performRequest()
         );
 
-        $data_item = array(
+        $data = array(
             'name' => $response->name,
             'image' => $response->profile_image_url,
             'screen_name' => $response->screen_name,
@@ -73,7 +72,7 @@ class Twitter {
             'statuses' => $response->statuses_count
         );
 
-        return $data_item;
+        return $data;
     }
 
     /**
@@ -154,7 +153,9 @@ class Twitter {
      * @param type $tweets 
      * @return type
      */
-    protected function prepareResult($tweets) {
+    protected function extractData($tweets) {
+        $data = array();
+
         foreach($tweets as $tweet) {
             $data_item = array(
                 'id' => $tweet->id,
@@ -168,8 +169,9 @@ class Twitter {
                 'retweeted' => $tweet->retweeted
             );
 
-            array_push($this->data, $data_item);
+            array_push($data, $data_item);
         }
+
+        return $data;
     }
 }
-?>
