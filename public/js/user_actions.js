@@ -55,4 +55,8 @@ $(document).ready(function() {
 
         $('.modal-body').html('<img src="'+image_src+'"/>');
     });
+
+    $('li#menu').click(function() {
+        
+    });
 });
