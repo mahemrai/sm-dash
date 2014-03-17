@@ -56,7 +56,7 @@ function replaceUrls($text, $entity) {
     foreach($entity as $item) {
         $manipulated_string = str_ireplace(
             $item->url, 
-            '<a href="'.$item->expanded_url.'">'.$item->display_url.'</a>', 
+            '<a href="'.$item->expanded_url.'" target="_blank">'.$item->display_url.'</a>', 
             $manipulated_string
         );
     }
@@ -76,7 +76,7 @@ function replaceHashtags($text, $entity) {
     foreach($entity as $item) {
         $manipulated_string = str_ireplace(
             '#'.$item->text, 
-            '<a href="http://twitter.com/search?q=%23'.$item->text.'&src=hash">#'.$item->text.'</a>', 
+            '<a href="http://twitter.com/search?q=%23'.$item->text.'&src=hash" target="_blank">#'.$item->text.'</a>', 
             $manipulated_string
         );
     }
@@ -96,7 +96,7 @@ function replaceUserMentions($text, $entity) {
     foreach($entity as $item) {
         $manipulated_string = str_ireplace(
             '@'.$item->screen_name,
-            '<a href="http://twitter.com/'.$item->screen_name.'">@'.$item->screen_name.'</a>',
+            '<a href="http://twitter.com/'.$item->screen_name.'" target="_blank">@'.$item->screen_name.'</a>',
             $text
         );
 
@@ -118,11 +118,11 @@ function replaceMedias($text, $entity) {
     foreach($entity as $item) {
         $manipulated_string = str_ireplace(
             $item->url,
-            '<a href="'.$item->media_url.'">'.$item->display_url.'</a>',
+            '<a id="image-view" value="'.$item->media_url.'" data-toggle="modal" data-target="#image-viewer">'.$item->display_url.'</a>',
             $manipulated_string
         );
 
-        $manipulated_string .= '<img class="thumbnail" src="'.$item->media_url.'"/>';
+        $manipulated_string .= '<br><img class="thumbnail" src="'.$item->media_url.'"/>';
     }
 
     return $manipulated_string;

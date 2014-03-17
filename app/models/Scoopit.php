@@ -79,6 +79,22 @@ class Scoopit {
         return $this->data;
     }
 
+    public function rescoopPost($post_id) {
+        $token = unserialize($_SESSION['SCOOPIT_ACCESS_TOKEN']);
+
+        $client = $token->getHttpClient($this->config);
+        $client->setUri(
+            "http://www.scoop.it/api/1/post"
+        );
+        $client->setMethod(Zend\Http\Request::METHOD_POST);
+        $client->setParameterPost(array(
+            'action' => 'rescoop',
+            'id' => $post_id
+        ));
+
+        $response = $client->send();
+    }
+
     /**
      * Retrieve api information from the database and set configuration data for 
      * the api client.

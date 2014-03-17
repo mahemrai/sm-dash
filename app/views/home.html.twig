@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="col-sm-6">
-    <h1>Twitter</h1>
+    <h2>Twitter</h2>
 
     {% for tweet in tweets %}
         <div class="well">
@@ -16,14 +16,23 @@
             <p>{{ tweet.created_at | date('Y-m-d') }}
             <span>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</span></p>
 
-            <button id="retweet" class="btn btn-primary btn-sm" value="{{ tweet.id }}">Retweet</button>
-            <button id="favorite" class="btn btn-primary btn-sm" value="{{ tweet.id }}">Favorite</button>
+            {% if tweet.retweeted %}
+                <span>Retweeted</span>
+            {% else %}
+                <a id="retweet-{{ tweet.id }}" class="btn btn-primary btn-sm retweet" value="{{ tweet.id }}">Retweet</a>
+            {% endif %}
+
+            {% if tweet.favorited %}
+                <span>Favorited</span>
+            {% else %}
+                <a id="favorite-{{ tweet.id }}" class="btn btn-primary btn-sm favorite" value="{{ tweet.id }}">Favorite</a>
+            {% endif %}
         </div>
     {% endfor %}
 </div>
 
 <div class="col-sm-6">
-    <h1>Scoop.it</h1>
+    <h2>Scoop.it</h2>
 
     {% for scoop in scoops %}
         <div class="well">
@@ -33,9 +42,17 @@
             </div>
             <p><span>Reactions: {{ scoop.reactionsCount }} Comments: {{ scoop.commentsCount }} Thanks: {{ scoop.thanksCount }}</span></p>
 
-            <button id="scoopit" class="btn btn-primary btn-sm">Scoop.it!</button>
+            <a href="{{ scoop.url }}" target="_blank" class="btn btn-primary btn-sm">View</a>
         </div>
     {% endfor %}
+</div>
+
+<div id="image-viewer" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body"></div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

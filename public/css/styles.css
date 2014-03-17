@@ -5780,7 +5780,18 @@ div.well {
 }
 div.well img.thumbnail {
   width: 100%;
+  margin-top: 10px;
+}
+div.well a {
+  cursor: pointer;
 }
 div.well a.btn-primary {
   border-radius: 0px;
+}
+div.modal-body img {
+  width: 100%;
+}
+ul.nav {
+  padding: 10px;
+  background: #fff;
 }

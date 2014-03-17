@@ -7,6 +7,7 @@
  */
 class Twitter {
     const TWITTER = 'Twitter';
+    const USERNAME = 'mahemrai';
 
     private $settings;
     private $data = array();
@@ -48,8 +49,35 @@ class Twitter {
         return $this->data;
     }
 
+    public function getUserStats() {
+        $url = 'https://api.twitter.com/1.1/users/show.json';
+        $request_method = 'GET';
+
+        $client = new TwitterApiExchange($this->settings);
+        $response = json_decode(
+            $client->setGetfield('?screen_name=mahemrai')
+                   ->buildOauth($url, $request_method)
+                   ->performRequest()
+        );
+
+        $data_item = array(
+            'name' => $response->name,
+            'image' => $response->profile_image_url,
+            'screen_name' => $response->screen_name,
+            'location' => $response->location,
+            'description' => $response->description,
+            'followers' => $response->followers_count,
+            'friends' => $response->friends_count,
+            'listed' => $response->listed_count,
+            'favourites' => $response->favourites_count,
+            'statuses' => $response->statuses_count
+        );
+
+        return $data_item;
+    }
+
     /**
-     * Description
+     * Send POST request to twitter to complete user's retweet action.
      * @return type
      */
     public function postRetweet($tweet_id) {
@@ -71,7 +99,7 @@ class Twitter {
     }
 
     /**
-     * Description
+     * Send POST request to twitter to complete user's favorite action.
      * @return boolean
      */
     public function postFavorite($tweet_id) {
