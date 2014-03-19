@@ -6,6 +6,7 @@
  */
 class Scoopit {
     const SCOOPIT = 'scoopit';
+    const TOPIC = 'all-things-interesting';
 
     private $config;
     private $api_key;
@@ -62,21 +63,53 @@ class Scoopit {
         $response = $client->send();
         $scoops = json_decode($response->getBody());
 
-        foreach($scoops->posts as $item) {
-            $data_item = array(
-                'reactionsCount' => $item->reactionsCount,
-                'commentsCount' => $item->commentsCount,
-                'title' => $item->title,
-                'image' => (isset($item->mediumImageUrl)) ? $item->mediumImageUrl : null,
-                'publicationDate' => date('Y-m-d', $item->publicationDate),
-                'url' => $item->url,
-                'thanksCount' => $item->thanksCount
-            );
+        return $this->extractPosts($scoops->posts);
+    }
 
-            array_push($this->data, $data_item);
-        }
+    public function getTopic($id=false) {
+        $token = unserialize($_SESSION['SCOOPIT_ACCESS_TOKEN']);
 
-        return $this->data;
+        $client = $token->getHttpClient($this->config);
+
+        ($id) ? $client->setUri("http://www.scoop.it/api/1/topic?id=".$id."&ncomments=0") : 
+                $client->setUri("http://www.scoop.it/api/1/topic?urlName=".self::TOPIC."&ncomments=0");
+
+        $client->setMethod(Zend\Http\Request::METHOD_GET);
+
+        $response = $client->send();
+        $topic = json_decode($response->getBody());
+
+        $data = array(
+            'id' => $topic->topic->id,
+            'image' => $topic->topic->mediumImageUrl,
+            'description' => $topic->topic->description,
+            'name' => $topic->topic->name,
+            'score' => $topic->topic->score,
+            'posts' => $this->extractPosts($topic->topic->curatedPosts),
+            'stats' => $topic->topic->stats
+        );
+
+        return $data;
+    }
+
+    public function getUserTopics() {
+        $token = unserialize($_SESSION['SCOOPIT_ACCESS_TOKEN']);
+
+        $client = $token->getHttpClient($this->config);
+        $client->setUri(
+            "http://www.scoop.it/api/1/profile?shortName=mahendra-rai&getStats=false&getCuratedTopics=true&getTags=false&getFollowedTopics=true"
+        );
+        $client->setMethod(Zend\Http\Request::METHOD_GET);
+        
+        $response = $client->send();
+        $topics = json_decode($response->getBody());
+        
+        $data = array(
+            'user_topics' => $this->extractTopics($topics->user->curatedTopics),
+            'followed_topics' => $this->extractTopics($topics->user->followedTopics)
+        );
+
+        return $data;
     }
 
     public function rescoopPost($post_id) {
@@ -115,6 +148,42 @@ class Scoopit {
             'consumerKey' => $api_info['api_key'],
             'consumerSecret' => $api_info['api_secret']
         );
+    }
+
+    protected function extractPosts($posts) {
+        $data = array();
+
+        foreach($posts as $post) {
+            $data_item = array(
+                'reactionsCount' => $post->reactionsCount,
+                'commentsCount' => $post->commentsCount,
+                'title' => $post->title,
+                'image' => (isset($post->mediumImageUrl)) ? $post->mediumImageUrl : null,
+                'publicationDate' => date('Y-m-d', $post->publicationDate),
+                'url' => $post->url,
+                'thanksCount' => $post->thanksCount
+            );
+
+            array_push($data, $data_item);
+        }
+
+        return $data;
+    }
+
+    protected function extractTopics($topics) {
+        $data = array();
+
+        foreach($topics as $topic) {
+            $data_item = array(
+                'id' => $topic->id,
+                'name' => $topic->name,
+                'short_name' => $topic->shortName
+            );
+
+            array_push($data, $data_item);
+        }
+
+        return $data;
     }
 }
 ?>

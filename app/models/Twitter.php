@@ -76,8 +76,32 @@ class Twitter {
     }
 
     /**
+     * Send POST request to twitter to complete user's tweet action.
+     * @param string $tweet_text 
+     * @return boolean
+     */
+    public function postTweet($tweet_text) {
+        $url = 'https://api.twitter.com/1.1/statuses/update.json';
+        $request_method = 'POST';
+
+        $postfield = array(
+            'status' => $tweet_text
+        );
+
+        $client = new TwitterApiExchange($this->settings);
+        $response = json_decode(
+            $client->buildOauth($url, $request_method)
+                   ->setPostfields($postfield)
+                   ->performRequest()
+        );
+
+        return (isset($response->errors)) ? false : true;
+    }
+
+    /**
      * Send POST request to twitter to complete user's retweet action.
-     * @return type
+     * @param int tweet_id
+     * @return boolean
      */
     public function postRetweet($tweet_id) {
         $url = 'https://api.twitter.com/1.1/statuses/retweet/'.$tweet_id.'.json';
@@ -103,6 +127,29 @@ class Twitter {
      */
     public function postFavorite($tweet_id) {
         $url = 'https://api.twitter.com/1.1/favorites/create.json';
+        $request_method = 'POST';
+
+        $postfield = array(
+            'id' => $tweet_id
+        );
+
+        $client = new TwitterApiExchange($this->settings);
+        $response = json_decode(
+            $client->buildOauth($url, $request_method)
+                   ->setPostfields($postfield)
+                   ->performRequest()
+        );
+
+        return (isset($response->errors)) ? false : true;
+    }
+
+    /**
+     * Send POST request to twitter to complete user's delete action.
+     * @param int $tweet_id 
+     * @return bolean
+     */
+    public function deleteTweet($tweet_id) {
+        $url = 'https://api.twitter.com/1.1/statuses/destroy/'.$tweet_id.'.json';
         $request_method = 'POST';
 
         $postfield = array(

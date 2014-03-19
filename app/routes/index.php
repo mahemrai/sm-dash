@@ -51,3 +51,18 @@ $app->get('/twitter', function() use ($app) {
 
     $app->render('twitter.html.twig', $view_data);
 });
+
+$app->get('/scoopit', function() use ($app) {
+    require '../app/models/Scoopit.php';
+
+    $scoopit = new Scoopit();
+    $topics = $scoopit->getUserTopics();
+    $topic = $scoopit->getTopic();
+
+    $view_data = array(
+        'topics' => $topics,
+        'topic' => $topic
+    );
+
+    $app->render('scoopit.html.twig', $view_data);
+});

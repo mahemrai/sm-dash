@@ -7,13 +7,15 @@
             <h2>Your Stats</h2>
 
             <div class="well">
-                <span>
-                    Followers: {{ stats.followers }} 
-                    Friends: {{ stats.friends }} 
-                    Listed: {{ stats.listed }} 
-                    Favourites: {{ stats.favourites }} 
-                    Tweets: {{ stats.statuses }}
-                </span>
+                <div class="row">
+                    <div id="stat" class="col-sm-4"> Followers {{ stats.followers }} </div>
+                    <div id="stat" class="col-sm-4"> Friends {{ stats.friends }} </div> 
+                    <div id="stat" class="col-sm-4"> Listed {{ stats.listed }} </div>
+                </div>
+                <div class="row">
+                    <div id="stat" class="col-sm-4"> Favourites {{ stats.favourites }} </div>
+                    <div id="stat" class="col-sm-4"> Tweets {{ stats.statuses }} </div>
+                </div>
             </div>
         </div>
     </div>
@@ -21,6 +23,13 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>Post Tweet</p>
+
+            <div class="well">
+                <form id="tweetForm" method="post" action="">
+                    <textarea id="status" class="form-control" rows="3"></textarea>
+                    <button id="tweet" type="submit" class="btn btn-primary btn-small">Tweet</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -41,6 +50,8 @@
                 {{ tweet.created_at | date('Y-m-d') }}
                 <span>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</span>
             </p>
+
+            <a id="delete-{{ tweet.id }}" class="btn btn-primary btn-small delete" value="{{ tweet.id }}">Delete</a>
         </div>
     {% endfor %}
 </div>

@@ -15,4 +15,12 @@ $app->get('/scoopit/authenticate', function() use ($app) {
         $scoopit->authorise();
     }
 });
-?>
+
+$app->get('/scoopit/topic/:id', function($id) use ($app) {
+    require '../app/models/Scoopit.php';
+
+    $scoopit = new Scoopit();
+    $topic = $scoopit->getTopic($id);
+
+    echo json_encode(array('result' => $topic));
+});

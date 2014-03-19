@@ -5791,6 +5791,10 @@ div.well a.btn-primary {
 div.modal-body img {
   width: 100%;
 }
+div#stat {
+  height: 60px;
+  color: #4f4f4f;
+}
 ul.nav {
   padding: 10px;
   background: #fff;
