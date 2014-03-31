@@ -1,0 +1,21 @@
+{% extends "layout/layout.html.twig" %}
+
+{% block content %}
+
+<div class="col-sm-12">
+    <h2>Accounts</h2>
+</div>
+
+{% for api_account in api_accounts %}
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="well">
+                    <h3>{{ api_account.account }}</h3>
+                    <a class="btn btn-primary" href="/settings/account/{{ api_account.id }}">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

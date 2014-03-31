@@ -47,5 +47,8 @@ require '../app/routes/twitter.php';
 //scoopit routes
 require '../app/routes/scoopit.php';
 
+//settings routes
+require '../app/routes/settings.php';
+
 $app->run();
 ?>

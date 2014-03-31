@@ -8,37 +8,25 @@ $(document).ready(function() {
     //send ajax request to perform retweet action when user 
     //clicks on retweet button
     $('a.retweet').click(function() {
-        //get id of the tweet from value attribute of the button
         var tweet_id = $(this).attr('value');
-
         var url = '/twitter/retweet';
         var json = { id: tweet_id };
         var elem = 'a#retweet-'+tweet_id;
-        var replacementHtml = '<span>Retweeted</span>'
+        var replacementHtml = '<span>Retweeted</span>';
 
-        performPostRequest(url, json, elem, replacementHtml);
+        sendPostRequest(url, json, elem, replacementHtml);
     });
 
     //send ajax request to perform favorite action when user 
     //clicks on favorite button
     $('a.favorite').click(function() {
-        //get id of the tweet from value attribute of the button
         var tweet_id = $(this).attr('value');
+        var url = '/twitter/favorite';
+        var json = { id: tweet_id };
+        var elem = 'a#favorite-'+tweet_id;
+        var replacementHtml = '<span>Favorited</span>';
 
-        //perform ajax request by attaching post data
-        $.post("/twitter/favorite", { id: tweet_id })
-            .done(function(data) {
-                var response = JSON.parse(data);
-
-                //show the text if the request was performed successfully otherwise 
-                //display a notification
-                if(response.result) {
-                    $('a#favorite-'+tweet_id).replaceWith('<span>Favorited</span>');
-                }
-                else {
-                    alert('Could not complete the request. Try again.');
-                }
-            });
+        sendPostRequest(url, json, elem, replacementHtml);
     });
 
     //add image in body of the modal when it loads
@@ -57,56 +45,64 @@ $(document).ready(function() {
         event.preventDefault();
 
         var text = $('textarea#status').val();
-        
-        $.post("/twitter/tweet", { status: text })
-            .done(function(data) {
-                var response = JSON.parse(data);
+        var url = '/twitter/tweet';
+        var json = { status: text };
 
-                if(response.result) {
-                    alert('Tweet successful');
-                }
-                else {
-                    alert('Could not complete the request. Try again.');
-                }
-            });
+        sendPostRequest(url, json, null, null);
     });
 
     //send ajax request to perform delete action when user clicks on 
     //delete button to delete the tweet
     $('a.delete').click(function() {
-        //get id of the tweet from the value attribute
         var tweet_id = $(this).attr('value');
+        var url = '/twitter/delete';
+        var json = { id: tweet_id };
+        var elem = 'a#delete-'+tweet_id;
+        var replacementHtml = '<span>Deleted</span>';
 
-        $.post("/twitter/delete", { id: tweet_id })
-            .done(function(data) {
-                var response = JSON.parse(data);
-
-                if(response.result) {
-                    $('a#delete-'+tweet_id).replaceWith('<span>Deleted</span>');
-                }
-                else {
-                    alert('Could not complete the request. Try again.');
-                }
-            });
+        sendPostRequest(url, json, elem, replacementHtml);
     });
 
+    //send ajax request to perform topic loading action when user clicks 
+    //or selects the topic to view
     $('a.load-topic').click(function() {
         var topic_id = $(this).attr('value');
 
         $.get("/scoopit/topic/"+topic_id, function(data) {
             var response = JSON.parse(data);
             redrawTopicInfo(response);
+            redrawPosts(response);
+        });
+    });
+
+    $('a#edit-account').click(function() {
+        var account_id = $(this).attr('value');
+
+        $.get("/accounts/"+account_id, function(data) {
+            var info = JSON.parse(data);
+
+            $('#api-key').attr('value', info.data.api_key);
+            $('#api-secret').attr('value', info.data.api_secret);
+            $('#oauth-token').attr('value', info.data.oauth_token);
+            $('#oauth-secret').attr('value', info.data.oauth_token_secret);
         });
     });
 });
 
-function performPostRequest(url, json, elem, replacementHtml) {
+/**
+ * Sends POST request to the server with json data and processes the 
+ * response.
+ */
+function sendPostRequest(url, json, elem, replacementHtml) {
     $.post(url, json)
         .done(function(data) {
             var response = JSON.parse(data);
 
             if(response.result) {
-                $(elem).replaceWith(replacementHtml);
+                if(elem === null) {
+                    alert('Tweet successful');
+                }
+                else $(elem).replaceWith(replacementHtml);
             }
             else alert('Could not complete the request. Try again.');
         })
@@ -125,4 +121,23 @@ function redrawTopicInfo(response) {
     $('#topic-v').text("Views: "+response.result.stats.v);
     $('#topic-vp').text("Views Progression: "+response.result.stats.vp);
     $('#topic-followers').text("Followers: "+response.result.stats.followers);
+}
+
+/**
+ * Replaces posts with posts related to the selected topic.
+ */
+function redrawPosts(response) {
+    var html = '';
+    for(var i=0; i<response.result.posts.length; i++) {
+        var post = response.result.posts[i];
+
+        html += '<div class="well"><div class="row">';
+        html += '<div class="col-sm-5"><img src="'+post['image']+'"/></div>';
+        html += '<div class="col-sm-7"><span>'+post['title']+'</span></div></div>';
+        html += '<p><span>Reactions: '+post['reactionsCount']+' Comments: '+post['commentsCount']+' Thanks: '+post['thanksCount']+'</span></p>';
+        html += '<a href="'+post['url']+'" target="_blank" class="btn btn-primary btn-sm">View</a>';
+        html += '</div>';
+    }
+
+    $('#post-container').html(html);
 }

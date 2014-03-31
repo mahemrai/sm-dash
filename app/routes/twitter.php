@@ -1,5 +1,11 @@
 <?php
 /**
+ * Twitter related routes for handling ajax requests.
+ * @package routes
+ * @author Mahendra Rai
+ */
+
+/**
  * Handle retweet action of the user by sending a POST 
  * request to Twitter.
  */
@@ -47,6 +53,10 @@ $app->post('/twitter/tweet', function() use ($app) {
     else echo json_encode(array('result' => false));
 });
 
+/**
+ * Handle delete action of the user by sending a POST request 
+ * to Twitter.
+ */
 $app->post('/twitter/delete', function() use ($app) {
     require '../app/models/Twitter.php';
 

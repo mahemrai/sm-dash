@@ -1,0 +1,48 @@
+{% extends "layout/layout.html.twig" %}
+
+{% block content %}
+
+<div class="col-sm-12">
+    <h2>{{ account }}</h2>
+</div>
+
+<div class="col-sm-12">
+    <div class="well">
+        <a id="edit-account" value="{{ id }}" class="btn btn-primary" data-toggle="modal" data-target="#account-form">Edit</a>
+        <p>Api Key: {{ api_key }}</p>
+        <p>Api Secret: {{ api_secret }}</p>
+        <p>Oauth Token: {{ oauth_token }}</p>
+        <p>Oauth Secret: {{ oauth_token_secret }}</p>
+    </div>
+</div>
+
+<div id="account-form" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form role="form" method="post" action="/settings/:id/edit">
+                    <div class="form-group">
+                        <label for="apiKey">Api Key</label>
+                        <input type="text" class="form-control" id="api-key">
+                    </div>
+                    <div class="form-group">
+                        <label for="apiSecret">Api Secret</label>
+                        <input type="text" class="form-control" id="api-secret">
+                    </div>
+                    <div class="form-group">
+                        <label for="oauthToken">Oauth Token</label>
+                        <input type="text" class="form-control" id="oauth-token">
+                    </div>
+                    <div class="form-group">
+                        <label for="oauthSecret">Oauth Secret</label>
+                        <input type="text" class="form-control" id="oauth-secret">
+                    </div>
+                    <button class="btn btn-primary">Save</button>
+                    <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
