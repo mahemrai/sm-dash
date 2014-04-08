@@ -1,22 +1,41 @@
 <?php
+/**
+ * Accounts class
+ * @package models
+ * @author Mahendra Rai
+ */
 class Accounts {
+    /**
+     * Description
+     * @return array
+     */
     public function getAllApiAccounts() {
-        $query = ORM::for_table('sm_accounts')
+        $accounts = ORM::for_table('sm_accounts')
             ->find_array();
 
-        return $query;
+        foreach($accounts as $account) {
+            $item = array('id' => $account['id']);
+            $data[$account['account']] = $item;
+        }
+
+        return $data;
     }
 
-    public function getApiAccount($id) {
-        $query = ORM::for_table('sm_accounts')->find_one($id)->as_array();
+    public function getApiAccount($account) {
+        $query = ORM::for_table('sm_accounts')
+            ->where('account', $account)
+            ->find_one()
+            ->as_array();
 
         return $query;
     }
 
     public function saveAccountDetails($data) {
-        $account = ORM::for_table('sm_accounts')->find_one($id);
+        $account = ORM::for_table('sm_accounts')
+            ->where('account', $data['name'])
+            ->find_one();
 
-        if($account != null) {
+        if($account) {
             $account->set(array(
                 'api_key' => $data['api_key'],
                 'api_secret' => $data['api_secret'],
@@ -27,12 +46,13 @@ class Accounts {
         else{
             $account = ORM::for_table('sm_accounts')->create();
 
+            $account->account = $data['name'];
             $account->api_key = $data['api_key'];
             $account->api_secret = $data['api_secret'];
             $account->oauth_token = $data['oauth_token'];
             $account->oauth_token_secret = $data['oauth_token_secret'];
         }
 
-        $account->save();
+        return $account->save();
     }
 }

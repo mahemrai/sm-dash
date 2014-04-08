@@ -74,14 +74,5 @@ $app->get('/scoopit', function() use ($app) {
  * Load settings page for the user.
  */
 $app->get('/settings', function() use ($app) {
-    require '../app/models/Accounts.php';
-
-    $accounts = new Accounts();
-    $api_accounts = $accounts->getAllApiAccounts();
-
-    $view_data = array(
-        'api_accounts' => $api_accounts
-    );
-
-    $app->render('settings.html.twig', $view_data);
+    $app->render('settings.html.twig');
 });

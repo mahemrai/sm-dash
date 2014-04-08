@@ -66,6 +66,13 @@ class Scoopit {
         return $this->extractPosts($scoops->posts);
     }
 
+    /**
+     * Send request to Scoop.it using Oauth Client and retrieve data 
+     * for the selected topic. The data received will contain general 
+     * information for the topic including posts and stats.
+     * @param int $id 
+     * @return string
+     */
     public function getTopic($id=false) {
         $token = unserialize($_SESSION['SCOOPIT_ACCESS_TOKEN']);
 
@@ -92,6 +99,11 @@ class Scoopit {
         return $data;
     }
 
+    /**
+     * Send request to Scoop.it using Oauth Client and retrieve list of 
+     * topics followed by the user.
+     * @return string
+     */
     public function getUserTopics() {
         $token = unserialize($_SESSION['SCOOPIT_ACCESS_TOKEN']);
 
@@ -112,6 +124,11 @@ class Scoopit {
         return $data;
     }
 
+    /**
+     * Description
+     * @param type $post_id 
+     * @return type
+     */
     public function rescoopPost($post_id) {
         $token = unserialize($_SESSION['SCOOPIT_ACCESS_TOKEN']);
 
@@ -150,6 +167,11 @@ class Scoopit {
         );
     }
 
+    /**
+     * Extract posts from the json response received from Scoop.it.
+     * @param object $posts 
+     * @return array
+     */
     protected function extractPosts($posts) {
         $data = array();
 
@@ -170,6 +192,11 @@ class Scoopit {
         return $data;
     }
 
+    /**
+     * Extract topics from the json response received from Scoop.it.
+     * @param object $topics 
+     * @return array
+     */
     protected function extractTopics($topics) {
         $data = array();
 

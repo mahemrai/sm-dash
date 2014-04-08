@@ -75,17 +75,55 @@ $(document).ready(function() {
         });
     });
 
-    $('a#edit-account').click(function() {
-        var account_id = $(this).attr('value');
+    $('a#account-info').click(function() {
+        $('div.message').html('');
 
-        $.get("/accounts/"+account_id, function(data) {
+        $('#api-key').val('');
+        $('#api-secret').val('');
+        $('#oauth-token').val('');
+        $('#oauth-secret').val('');
+
+        var account = $(this).attr('value');
+
+        $.get("/accounts/"+account, function(data) {
             var info = JSON.parse(data);
 
-            $('#api-key').attr('value', info.data.api_key);
-            $('#api-secret').attr('value', info.data.api_secret);
-            $('#oauth-token').attr('value', info.data.oauth_token);
-            $('#oauth-secret').attr('value', info.data.oauth_token_secret);
+            $('#api-account').val(account);
+            $('#api-key').val(info.data.api_key);
+            $('#api-secret').val(info.data.api_secret);
+            $('#oauth-token').val(info.data.oauth_token);
+            $('#oauth-secret').val(info.data.oauth_token_secret);
+
+            $('button.edit').attr('id', 'edit-details');
+            $('form').attr('action', '/settings/edit');
+        }).fail(function() {
+            $('#api-account').val(account);
+            $('button.edit').attr('id', 'new-details');
+            $('form').attr('action', '/settings/create');
+
+            $('div.message').html('<div class="alert alert-warning">API details does not exist.</div>');
         });
+    });
+
+    $('form').submit(function(e) {
+        e.preventDefault();
+
+        var json = {
+            name: $('#api-account').attr('value'),
+            api_key: $('#api-key').val(),
+            api_secret: $('#api-secret').val(),
+            oauth_token: $('#oauth-token').val(),
+            oauth_token_secret: $('#oauth-secret').val()
+        };
+
+        $.post($('form').attr('action'), json)
+            .done(function(data) {
+                var response = JSON.parse(data);
+
+                if(response.result) {
+                    $('div.message').html('<div class="alert alert-success">API details successfully saved.</div>');
+                }
+            });
     });
 });
 
