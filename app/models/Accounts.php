@@ -6,7 +6,7 @@
  */
 class Accounts {
     /**
-     * Description
+     * Fetch all api accounts.
      * @return array
      */
     public function getAllApiAccounts() {
@@ -21,6 +21,11 @@ class Accounts {
         return $data;
     }
 
+    /**
+     * Fetch api detail for the selected account.
+     * @param string $account 
+     * @return array
+     */
     public function getApiAccount($account) {
         $query = ORM::for_table('sm_accounts')
             ->where('account', $account)
@@ -30,6 +35,12 @@ class Accounts {
         return $query;
     }
 
+    /**
+     * Save api details for the existing account or create a new account if 
+     * it doesn't exist.
+     * @param array $data 
+     * @return boolean
+     */
     public function saveAccountDetails($data) {
         $account = ORM::for_table('sm_accounts')
             ->where('account', $data['name'])

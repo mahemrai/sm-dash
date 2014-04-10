@@ -7,13 +7,12 @@
     {% for tweet in tweets %}
         <div class="well">
             <p>
-                <img src="{{ tweet.user.profile_image_url }}"/>
+                <img class="img-circle" src="{{ tweet.user.profile_image_url }}"/>
                 <a href="http://twitter.com/{{ tweet.user.screen_name }}">{{ tweet.user.name }}</a>
             </p>
 
             {{ display_tweet(tweet.text, tweet.entities) }}
 
-            <p>{{ tweet.created_at | date('Y-m-d') }}
             <span>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</span></p>
 
             {% if tweet.retweeted %}
