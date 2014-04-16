@@ -1,10 +1,18 @@
 @import '../bootstrap/bootstrap.less';
 
-@body-bg: #e5e5e5;
+@body-bg: #dadfe1;
 
 @well-bg: #fff;
+@well-border: darken(@well-bg, 0%);
 
 @font-family-sans-serif: 'Roboto';
+
+@btn-primary-bg: #666666;
+@btn-primary-color: #fff;
+
+h2 {
+    color: #464646;
+}
 
 div.well {
     border-radius: 0px;
@@ -12,17 +20,67 @@ div.well {
     margin-bottom: 5px;
     border-border: 0px;
 
-    img.img-rounded {
-        width: 100%;
-        margin-top: 10px;
+    div#stat {
+        text-align: center;
     }
 
-    a {
-        cursor: pointer;
+    span.counter {
+        font-size: 24px;
+        display: block;
     }
 
-    a.btn-primary {
-        border-radius: 0px;
+    span.metric {
+        font-size: 14px;
+        display: block;
+        color: #7f8c8d;
+    }
+
+    div#header {
+        div {
+            img {
+                margin-right: 10px;
+            }
+
+            a {
+                font-size: 16px;
+                color: #34495e;
+            }
+        }
+    }
+
+    div#content {
+        margin-bottom: 10px;
+
+        a {
+            color: #00d2a5;
+            cursor: pointer;
+        }
+
+        img.img-rounded {
+            margin-right: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
+
+    div#footer {
+        div {
+            span {
+                color: #7f8c8d;
+                font-size: 14px;
+            }
+
+            span.label {
+                color: #fff;
+                margin-right:10px;
+                font-size: 12px;
+            }
+
+            a.btn-primary {
+                margin-right: 10px;
+                border: 0;
+            }
+        }
     }
 }
 
@@ -39,5 +97,15 @@ div#stat {
 
 ul.nav {
     padding: 10px;
-    background: #fff;
+    background: #abb7b7;
+
+    li#menu {
+        a {
+            color: #fff;
+        }
+
+        a:hover {
+            color: #ccc;
+        }
+    }
 }

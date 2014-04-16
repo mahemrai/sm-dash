@@ -6,26 +6,44 @@
 
     {% for tweet in tweets %}
         <div class="well">
-            <p>
-                <img class="img-circle" src="{{ tweet.user.profile_image_url }}"/>
-                <a href="http://twitter.com/{{ tweet.user.screen_name }}">{{ tweet.user.name }}</a>
-            </p>
+            <div class="row" id="header">
+                <div class="col-sm-12">
+                    <p>
+                        <img class="img-circle" src="{{ tweet.user.profile_image_url }}"/>
+                        <a href="http://twitter.com/{{ tweet.user.screen_name }}"><strong>{{ tweet.user.name }}</strong></a>
+                    </p>
+                </div>
+            </div>
 
-            {{ display_tweet(tweet.text, tweet.entities) }}
+            <div class="row" id="content">
+                <div class="col-sm-12">{{ display_tweet(tweet.text, tweet.entities) }}</div>
+            </div>
 
-            <span>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</span></p>
+            <div class="row" id="footer">
+                <div class="col-sm-6">
+                    <span>
+                        <strong>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</strong>
+                    </span>
+                </div>
 
-            {% if tweet.retweeted %}
-                <span>Retweeted</span>
-            {% else %}
-                <a id="retweet-{{ tweet.id }}" class="btn btn-primary btn-sm retweet" value="{{ tweet.id }}">Retweet</a>
-            {% endif %}
+                <div class="col-sm-6">
+                    {% if tweet.retweeted %}
+                        <span class="label label-info">Retweeted</span>
+                    {% else %}
+                        <a id="retweet-{{ tweet.id }}" class="btn btn-primary btn-sm retweet" value="{{ tweet.id }}">
+                            <i id="retweet-{{ tweet.id }}" class="fa fa-retweet"></i> Retweet
+                        </a>
+                    {% endif %}
 
-            {% if tweet.favorited %}
-                <span>Favorited</span>
-            {% else %}
-                <a id="favorite-{{ tweet.id }}" class="btn btn-primary btn-sm favorite" value="{{ tweet.id }}">Favorite</a>
-            {% endif %}
+                    {% if tweet.favorited %}
+                        <span class="label label-warning">Favorited</span>
+                    {% else %}
+                        <a id="favorite-{{ tweet.id }}" class="btn btn-primary btn-sm favorite" value="{{ tweet.id }}">
+                            <i id="favorite-{{ tweet.id }}" class="fa fa-star"></i> Favorite
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     {% endfor %}
 </div>
@@ -35,13 +53,30 @@
 
     {% for scoop in scoops %}
         <div class="well">
-            <div class="row">
-                <div class="col-sm-5"><img src="{{ scoop.image }}" /></div>
-                <div class="col-sm-7"><span>{{ scoop.title }}</span></div>
+            <div class="row" id="content">
+                {% if scoop.image %}
+                    <div class="col-sm-12">
+                        <div class="col-sm-5"><img src="{{ scoop.image }}" /></div>
+                        <div class="col-sm-7"><span>{{ scoop.title }}</span></div>
+                    </div>
+                {% else %}
+                    <div class="col-sm-12"><span>{{ scoop.title }}</span></div>
+                {% endif %}
             </div>
-            <p><span>Reactions: {{ scoop.reactionsCount }} Comments: {{ scoop.commentsCount }} Thanks: {{ scoop.thanksCount }}</span></p>
 
-            <a href="{{ scoop.url }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+            <div class="row" id="footer">
+                <div class="col-sm-6">
+                    <span>
+                        Reactions: {{ scoop.reactionsCount }} Comments: {{ scoop.commentsCount }} Thanks: {{ scoop.thanksCount }}
+                    </span>
+                </div>
+
+                <div class="col-sm-6">
+                    <a href="{{ scoop.url }}" target="_blank" class="btn btn-primary btn-sm">
+                        <i class="fa fa-eye"></i> View
+                    </a>
+                </div>
+            </div>
         </div>
     {% endfor %}
 </div>

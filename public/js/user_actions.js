@@ -12,7 +12,9 @@ $(document).ready(function() {
         var url = '/twitter/retweet';
         var json = { id: tweet_id };
         var elem = 'a#retweet-'+tweet_id;
-        var replacementHtml = '<span>Retweeted</span>';
+        var replacementHtml = '<span class="label label-info">Retweeted</span>';
+
+        $('i#retweet-'+tweet_id).replaceWith('<i class="fa fa-refresh fa-spin"></i>');
 
         sendPostRequest(url, json, elem, replacementHtml);
     });
@@ -24,7 +26,9 @@ $(document).ready(function() {
         var url = '/twitter/favorite';
         var json = { id: tweet_id };
         var elem = 'a#favorite-'+tweet_id;
-        var replacementHtml = '<span>Favorited</span>';
+        var replacementHtml = '<span class="label label-warning">Favorited</span>';
+
+        $('i#favorite-'+tweet_id).replaceWith('<i class="fa fa-refresh fa-spin"></i>');
 
         sendPostRequest(url, json, elem, replacementHtml);
     });
@@ -48,6 +52,8 @@ $(document).ready(function() {
         var url = '/twitter/tweet';
         var json = { status: text };
 
+        $('i#post').replaceWith('<i class="fa fa-refresh fa-spin"></i>');
+
         sendPostRequest(url, json, null, null);
     });
 
@@ -58,7 +64,9 @@ $(document).ready(function() {
         var url = '/twitter/delete';
         var json = { id: tweet_id };
         var elem = 'a#delete-'+tweet_id;
-        var replacementHtml = '<span>Deleted</span>';
+        var replacementHtml = '<span class="label label-warning">Deleted</span>';
+
+        $('i#delete-'+tweet_id).replaceWith('<i class="fa fa-refresh fa-spin"></i>');
 
         sendPostRequest(url, json, elem, replacementHtml);
     });

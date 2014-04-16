@@ -161,7 +161,7 @@ class Scoopit {
                 'title' => $post->title,
                 'image' => (isset($post->mediumImageUrl)) ? $post->mediumImageUrl : null,
                 'publicationDate' => date('Y-m-d', $post->publicationDate),
-                'url' => $post->url,
+                'url' => (isset($post->url)) ? $post->url : null,
                 'thanksCount' => $post->thanksCount
             );
 

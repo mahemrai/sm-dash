@@ -269,7 +269,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
-  background-color: #e5e5e5;
+  background-color: #dadfe1;
 }
 input,
 button,
@@ -314,7 +314,7 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.42857143;
-  background-color: #e5e5e5;
+  background-color: #dadfe1;
   border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
@@ -1430,7 +1430,7 @@ th {
   border-top: 2px solid #dddddd;
 }
 .table .table {
-  background-color: #e5e5e5;
+  background-color: #dadfe1;
 }
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
@@ -2073,8 +2073,8 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: #ffffff;
-  background-color: #428bca;
-  border-color: #357ebd;
+  background-color: #666666;
+  border-color: #595959;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -2082,8 +2082,8 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
   color: #ffffff;
-  background-color: #3276b1;
-  border-color: #285e8e;
+  background-color: #525252;
+  border-color: #3b3b3b;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -2105,11 +2105,11 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
-  background-color: #428bca;
-  border-color: #357ebd;
+  background-color: #666666;
+  border-color: #595959;
 }
 .btn-primary .badge {
-  color: #428bca;
+  color: #666666;
   background-color: #ffffff;
 }
 .btn-success {
@@ -3501,7 +3501,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   color: #555555;
-  background-color: #e5e5e5;
+  background-color: #dadfe1;
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -3547,7 +3547,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs.nav-justified > .active > a,
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: #e5e5e5;
+    border-bottom-color: #dadfe1;
   }
 }
 .nav-pills > li {
@@ -3615,7 +3615,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs-justified > .active > a,
   .nav-tabs-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus {
-    border-bottom-color: #e5e5e5;
+    border-bottom-color: #dadfe1;
   }
 }
 .tab-content > .tab-pane {
@@ -4394,7 +4394,7 @@ a.list-group-item.active > .badge,
   padding: 4px;
   margin-bottom: 20px;
   line-height: 1.42857143;
-  background-color: #e5e5e5;
+  background-color: #dadfe1;
   border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
@@ -5029,7 +5029,7 @@ a.list-group-item-danger.active:focus {
   padding: 19px;
   margin-bottom: 20px;
   background-color: #ffffff;
-  border: 1px solid #ededed;
+  border: 1px solid #ffffff;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -5772,21 +5772,58 @@ button.close {
     display: none !important;
   }
 }
+h2 {
+  color: #464646;
+}
 div.well {
   border-radius: 0px;
   box-shadow: none;
   margin-bottom: 5px;
   border-border: 0px;
 }
-div.well img.img-rounded {
+div.well div#stat {
+  text-align: center;
+}
+div.well span.counter {
+  font-size: 24px;
+  display: block;
+}
+div.well span.metric {
+  font-size: 14px;
+  display: block;
+  color: #7f8c8d;
+}
+div.well div#header div img {
+  margin-right: 10px;
+}
+div.well div#header div a {
+  font-size: 16px;
+  color: #34495e;
+}
+div.well div#content {
+  margin-bottom: 10px;
+}
+div.well div#content a {
+  color: #00d2a5;
+  cursor: pointer;
+}
+div.well div#content img.img-rounded {
+  margin-right: 10px;
   width: 100%;
   margin-top: 10px;
 }
-div.well a {
-  cursor: pointer;
+div.well div#footer div span {
+  color: #7f8c8d;
+  font-size: 14px;
 }
-div.well a.btn-primary {
-  border-radius: 0px;
+div.well div#footer div span.label {
+  color: #fff;
+  margin-right: 10px;
+  font-size: 12px;
+}
+div.well div#footer div a.btn-primary {
+  margin-right: 10px;
+  border: 0;
 }
 div.modal-body img {
   width: 100%;
@@ -5797,5 +5834,11 @@ div#stat {
 }
 ul.nav {
   padding: 10px;
-  background: #fff;
+  background: #abb7b7;
+}
+ul.nav li#menu a {
+  color: #fff;
+}
+ul.nav li#menu a:hover {
+  color: #ccc;
 }
