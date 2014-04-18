@@ -14,6 +14,10 @@ h2 {
     color: #464646;
 }
 
+a {
+    cursor: pointer;
+}
+
 div.well {
     border-radius: 0px;
     box-shadow: none;
@@ -82,11 +86,22 @@ div.well {
             }
         }
     }
+
+    a#account-info {
+        margin-top: 20px;
+        font-weight: bold;
+    }
 }
 
 div.modal-body {
     img {
         width: 100%;
+    }
+
+    i.fa-plus-circle {
+        transform: rotate(45deg);
+        -ms-transform:rotate(45deg);
+        -webkit-transform:rotate(45deg);
     }
 }
 

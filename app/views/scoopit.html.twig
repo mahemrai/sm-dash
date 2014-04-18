@@ -7,14 +7,37 @@
             <h2>Topic</h2>
 
             <div id="topic-info" class="well">
-                <h3 id="topic-name">{{ topic.name }}</h3>
-                <p id="topic-desc">{{ topic.description }}</p>
-                <span id="topic-score">Score: {{ topic.score }}</span>
-                <span id="topic-uv">Visitors: {{ topic.stats.uv }}</span>
-                <span id="topic-uvp">Visitors Progression: {{ topic.stats.uvp }}</span>
-                <span id="topic-v">Views: {{ topic.stats.v }}</span>
-                <span id="topic-vp">Views Progression: {{ topic.stats.vp }}</span>
-                <span id="topic-followers">Followers: {{ topic.stats.followers }}</span>
+                <div class="row" style="text-align:center;">
+                    <h3 id="topic-name">{{ topic.name }}</h3>
+                    <p id="topic-desc">{{ topic.description }}</p>
+                </div>
+
+                <div class="row">
+                    <div id="stat" class="col-sm-4">
+                        <span id="topic-score" class="counter"><strong>{{ topic.score }}</strong></span>
+                        <span class="metric">Score</span>
+                    </div>
+                    <div id="stat" class="col-sm-4">
+                        <span id="topic-uv" class="counter"><strong>{{ topic.stats.uv }}</strong></span>
+                        <span class="metric">Visitors</span>
+                    </div>
+                    <div id="stat" class="col-sm-4">
+                        <span id="topic-uvp" class="counter"><strong>{{ topic.stats.uvp }}</strong> </span>
+                        <span class="metric">Visitors Progression</span>
+                    </div>
+                    <div id="stat" class="col-sm-4">
+                        <span id="topic-v" class="counter"><strong>{{ topic.stats.v }}</strong></span>
+                        <span class="metric">Views</span>
+                    </div>
+                    <div id="stat" class="col-sm-4">
+                        <span id="topic-vp" class="counter"><strong>{{ topic.stats.vp }}</strong></span>
+                        <span class="metric">Views Progression</span>
+                    </div>
+                    <div id="stat" class="col-sm-4">
+                        <span id="topic-followers" class="counter"><strong>{{ topic.stats.followers }}</strong></span>
+                        <span class="metric">Followers</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -26,12 +49,16 @@
             <div class="well">
                 <h3>User Topics</h3>
                 {% for user_topic in topics.user_topics %}
-                    <p><a id="topic-{{ user_topic.id }}" class="load-topic" value="{{ user_topic.id }}">{{ user_topic.name }}</a></p>
+                    <p>
+                        <button id="topic-{{ user_topic.id }}" class="btn btn-default load-topic" value="{{ user_topic.id }}">{{ user_topic.name }}</button>
+                    </p>
                 {% endfor %}
 
                 <h3>Followed Topics</h3>
                 {% for followed_topic in topics.followed_topics %}
-                    <p><a id="topic-{{ followed_topic.id }}" class="load-topic" value="{{ followed_topic.id }}">{{ followed_topic.name }}</a></p>
+                    <p>
+                        <button id="topic-{{ followed_topic.id }}" class="btn btn-default load-topic" value="{{ followed_topic.id }}">{{ followed_topic.name }}</button>
+                    </p>
                 {% endfor %}
             </div>
         </div>
@@ -46,15 +73,42 @@
             <div id="post-container">
             {% for post in topic.posts %}
                 <div class="well">
-                    <div class="row">
-                        <div class="col-sm-5"><img src="{{ post.image }}"/></div>
-                        <div class="col-sm-7"><span>{{ post.title }}</span></div>
+                    <div class="row" id="content">
+                        {% if post.image %}
+                            <div class="col-sm-12">
+                                <div class="col-sm-5"><img src="{{ post.image }}"/></div>
+                                <div class="col-sm-7"><span>{{ post.title }}</span></div>
+                            </div>
+                        {% else %}
+                            <div class="col-sm-12"><span>{{ post.title }}</span></div>
+                        {% endif %}
                     </div>
-                    <p><span>Reactions: {{ post.reactionsCount }} Comments: {{ post.commentsCount }} Thanks: {{ post.thanksCount }}</span></p>
 
-                    <a href="{{ post.url }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                    <div class="row" id="footer">
+                        <div class="col-sm-6">
+                            <span>
+                                Reactions: {{ post.reactionsCount }} Comments: {{ post.commentsCount }} Thanks: {{ post.thanksCount }}
+                            </span>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <a href="{{ post.url }}" target="_blank" class="btn btn-primary btn-sm">
+                                <i class="fa fa-eye"></i> View
+                            </a>
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="topic-load" class="modal">
+    <div class="modal-dialog" style="width:300px;text-align:center;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3><i class="fa fa-refresh fa-spin"></i> Loading topic...</h3>
             </div>
         </div>
     </div>

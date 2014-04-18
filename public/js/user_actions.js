@@ -52,7 +52,8 @@ $(document).ready(function() {
         var url = '/twitter/tweet';
         var json = { status: text };
 
-        $('i#post').replaceWith('<i class="fa fa-refresh fa-spin"></i>');
+        //$('i#post').replaceWith('<i id="post" class="fa fa-refresh fa-spin"></i>');
+        $('#tweet-post').modal('show');
 
         sendPostRequest(url, json, null, null);
     });
@@ -73,13 +74,16 @@ $(document).ready(function() {
 
     //send ajax request to perform topic loading action when user clicks 
     //or selects the topic to view
-    $('a.load-topic').click(function() {
+    $('button.load-topic').click(function() {
         var topic_id = $(this).attr('value');
+
+        $('#topic-load').modal('show');
 
         $.get("/scoopit/topic/"+topic_id, function(data) {
             var response = JSON.parse(data);
             redrawTopicInfo(response);
             redrawPosts(response);
+            $('#topic-load').modal('hide');
         });
     });
 
@@ -146,7 +150,8 @@ function sendPostRequest(url, json, elem, replacementHtml) {
 
             if(response.result) {
                 if(elem === null) {
-                    alert('Tweet successful');
+                    //$('i#post').replaceWith('<i id="post" class="fa fa-pencil-square-o"></i>');
+                    $('#tweet-post').modal('hide');
                 }
                 else $(elem).replaceWith(replacementHtml);
             }
@@ -161,12 +166,12 @@ function sendPostRequest(url, json, elem, replacementHtml) {
 function redrawTopicInfo(response) {
     $('#topic-name').text(response.result.name);
     $('#topic-desc').text(response.result.description);
-    $('#topic-score').text("Score: "+response.result.score);
-    $('#topic-uv').text("Visitors: "+response.result.stats.uv);
-    $('#topic-uvp').text("Visitors Progression: "+response.result.stats.uvp);
-    $('#topic-v').text("Views: "+response.result.stats.v);
-    $('#topic-vp').text("Views Progression: "+response.result.stats.vp);
-    $('#topic-followers').text("Followers: "+response.result.stats.followers);
+    $('#topic-score').text(response.result.score);
+    $('#topic-uv').text(response.result.stats.uv);
+    $('#topic-uvp').text(response.result.stats.uvp);
+    $('#topic-v').text(response.result.stats.v);
+    $('#topic-vp').text(response.result.stats.vp);
+    $('#topic-followers').text(response.result.stats.followers);
 }
 
 /**
@@ -177,12 +182,17 @@ function redrawPosts(response) {
     for(var i=0; i<response.result.posts.length; i++) {
         var post = response.result.posts[i];
 
-        html += '<div class="well"><div class="row">';
-        html += '<div class="col-sm-5"><img src="'+post['image']+'"/></div>';
-        html += '<div class="col-sm-7"><span>'+post['title']+'</span></div></div>';
-        html += '<p><span>Reactions: '+post['reactionsCount']+' Comments: '+post['commentsCount']+' Thanks: '+post['thanksCount']+'</span></p>';
-        html += '<a href="'+post['url']+'" target="_blank" class="btn btn-primary btn-sm">View</a>';
-        html += '</div>';
+        html += '<div class="well"><div class="row" id="content"><div class="col-sm-12">';
+        if(post['image']) {
+            html += '<div class="col-sm-5"><img src="'+post['image']+'"/></div>';
+            html += '<div class="col-sm-7"><span>'+post['title']+'</span></div></div></div>';
+        }
+        else html += '<div class="col-sm-12"><span>'+post['title']+'</div></div></div>';
+        html += '<div class="row" id="footer"><div class="col-sm-6">';
+        html += '<span>Reactions: '+post['reactionsCount']+' Comments: '+post['commentsCount']+' Thanks: '+post['thanksCount']+'</span></div>';
+        html += '<div class="col-sm-6">';
+        html += '<a href="'+post['url']+'" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View</a></div>';
+        html += '</div></div>';
     }
 
     $('#post-container').html(html);
