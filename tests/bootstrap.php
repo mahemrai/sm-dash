@@ -7,7 +7,7 @@ date_default_timezone_set('UTC');
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-class Slim_Framework_TestCase extends PHPUnit_Framework_TestCase{
+class Slim_Framework_TestCase extends PHPUnit_Framework_TestCase {
     private $testingMethods = array('get', 'post');
 
     public function setup() {
@@ -34,7 +34,7 @@ class Slim_Framework_TestCase extends PHPUnit_Framework_TestCase{
             'PATH_INFO' => $path,
             'SERVER_NAME' => 'locahost::8117',
             'slim.input' => http_build_query($formVars)
-        ), $optionsHeaders));
+        ), $optionalHeaders));
 
         $this->request = $this->app->request();
         $this->response = $this->app->response();
