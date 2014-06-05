@@ -12,7 +12,7 @@
         "slim/slim": "2.*",
         "j4mie/idiorm": "1.4.*",
         "j4mie/paris": "1.4.*",
-        "twig/twig": "1.15.*@dev",
+        "twig/twig": "1.16.*@dev",
         "slim/views": "0.1.*",
         "j7mbo/twitter-api-php": "dev-master",
         "oyejorge/less.php": "~1.5",
@@ -21,6 +21,7 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "1.*",
         "phpunit/phpunit": "3.7.*",
-        "indeyets/pake": "~1.99"
+        "indeyets/pake": "~1.99",
+        "chriskite/phactory": "dev-master"
     }
 }
