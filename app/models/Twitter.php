@@ -9,26 +9,26 @@ class Twitter {
     const TWITTER = 'Twitter';
     const USERNAME = 'mahemrai';
 
+    private $client;
     private $settings;
-    
+
     //constructor
-    public function __construct() {
-        $this->getApiInfo();
+    public function __construct(TwitterApiExchange $client) {
+        $this->client = $client;
     }
 
     /**
      * Get home timeline tweets from Twitter.
      * @return array
      */
-    public function getHomeTimeline() {
-        $url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
+    public function getHomeTimeline($url) {
+        //$url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
         $request_method = 'GET';
 
-        $client = new TwitterApiExchange($this->settings);
-        $tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
+        $tweets = json_decode($this->client->buildOauth($url, $request_method)->performRequest());
 
         $data = $this->extractData($tweets);
-        
+
         return $data;
     }
 
@@ -36,12 +36,11 @@ class Twitter {
      * Get user tweets from Twitter.
      * @return array
      */
-    public function getUserTimeline() {
-        $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+    public function getUserTimeline($url) {
+        //$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
         $request_method = 'GET';
 
-        $client = new TwitterApiExchange($this->settings);
-        $tweets = json_decode($client->buildOauth($url, $request_method)->performRequest());
+        $tweets = json_decode($this->client->buildOauth($url, $request_method)->performRequest());
 
         $data = $this->extractData($tweets);
 
@@ -49,12 +48,11 @@ class Twitter {
     }
 
     public function getUserStats() {
-        $url = 'https://api.twitter.com/1.1/users/show.json';
+        //$url = 'https://api.twitter.com/1.1/users/show.json';
         $request_method = 'GET';
 
-        $client = new TwitterApiExchange($this->settings);
         $response = json_decode(
-            $client->setGetfield('?screen_name=mahemrai')
+            $this->client->setGetfield('?screen_name=mahemrai')
                    ->buildOauth($url, $request_method)
                    ->performRequest()
         );
@@ -77,7 +75,7 @@ class Twitter {
 
     /**
      * Send POST request to twitter to complete user's tweet action.
-     * @param string $tweet_text 
+     * @param string $tweet_text
      * @return boolean
      */
     public function postTweet($tweet_text) {
@@ -145,7 +143,7 @@ class Twitter {
 
     /**
      * Send POST request to twitter to complete user's delete action.
-     * @param int $tweet_id 
+     * @param int $tweet_id
      * @return bolean
      */
     public function deleteTweet($tweet_id) {
@@ -170,7 +168,7 @@ class Twitter {
      * Retrieve api information from the database.
      * @return array
      */
-    protected function getApiInfo() {
+    public function getApiInfo() {
         $api_info = ORM::for_table('sm_accounts')
             ->where('account', self::TWITTER)
             ->find_one()
@@ -185,19 +183,19 @@ class Twitter {
     }
 
     /**
-     * Determine whether the selected tweet is a retweeted status or not and return 
+     * Determine whether the selected tweet is a retweeted status or not and return
      * appropriate content.
-     * @param object $tweet 
+     * @param object $tweet
      * @return string
      */
     protected function selectTweetContent($tweet) {
-        return (isset($tweet->retweeted_status)) ? 
+        return (isset($tweet->retweeted_status)) ?
             $tweet->retweeted_status->text : $tweet->text;
     }
 
     /**
      * Description
-     * @param type $tweets 
+     * @param type $tweets
      * @return type
      */
     protected function extractData($tweets) {

@@ -81,8 +81,8 @@ class AccountsTest extends \PHPUnit_Framework_TestCase {
         $result = $this->accounts->saveAccountDetails($this->update_data);
         $this->assertTrue($result);
 
-        //$updated = $this->accounts->getApiAccount($param);
-        //$this->assertEquals($this->update_data, (array) $updated['data']);
+        $updated = $this->accounts->getApiAccount($param);
+        $this->assertEquals($this->update_data['api_key'], $updated->get('api_key'));
     }
 
     /**

@@ -6,7 +6,7 @@
  */
 
 /**
- * Handle retweet action of the user by sending a POST 
+ * Handle retweet action of the user by sending a POST
  * request to Twitter.
  */
 $app->post('/twitter/retweet', function() use ($app) {
@@ -22,7 +22,7 @@ $app->post('/twitter/retweet', function() use ($app) {
 });
 
 /**
- * Handle favorite action fo the user by sending a POST 
+ * Handle favorite action fo the user by sending a POST
  * request to Twitter.
  */
 $app->post('/twitter/favorite', function() use ($app) {
@@ -38,7 +38,7 @@ $app->post('/twitter/favorite', function() use ($app) {
 });
 
 /**
- * Handle tweet action of the user by sending a POST request 
+ * Handle tweet action of the user by sending a POST request
  * to Twitter.
  */
 $app->post('/twitter/tweet', function() use ($app) {
@@ -54,7 +54,7 @@ $app->post('/twitter/tweet', function() use ($app) {
 });
 
 /**
- * Handle delete action of the user by sending a POST request 
+ * Handle delete action of the user by sending a POST request
  * to Twitter.
  */
 $app->post('/twitter/delete', function() use ($app) {

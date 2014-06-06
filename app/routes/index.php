@@ -6,7 +6,7 @@
  */
 
 /**
- * Authorise user with Scoop.it if required and load 
+ * Authorise user with Scoop.it if required and load
  * feeds from Twitter and Scoop.it.
  */
 $app->get('/', function() use ($app) {
@@ -15,22 +15,23 @@ $app->get('/', function() use ($app) {
 
     $scoopit = new Scoopit();
 
-    //authorise user with scoopit if the access token is no longer 
+    //authorise user with scoopit if the access token is no longer
     //valid otherwise load scoops for the user
     if(empty($_SESSION['SCOOPIT_ACCESS_TOKEN'])) {
         $scoopit->authorise();
     }
     else $scoops = $scoopit->getCompilation(20);
 
-    $twitter = new Twitter();
-    //retrieve hometimeline tweets for the user
-    $tweets = $twitter->getHomeTimeline();
+    $client = new TwitterApiExchange($twitter->getApiInfo());
+
+    $twitter = new Twitter($client);
+    $tweets = $twitter->getHomeTimeline('https://api.twitter.com/1.1/statuses/home_timeline.json');
 
     $view_data = array(
         'tweets' => $tweets,
         'scoops' => $scoops
     );
-    
+
     $app->render('home.html.twig', $view_data);
 });
 
@@ -40,9 +41,11 @@ $app->get('/', function() use ($app) {
 $app->get('/twitter', function() use ($app) {
     require '../app/models/Twitter.php';
 
-    $twitter = new Twitter();
-    $stats = $twitter->getUserStats();
-    $tweets = $twitter->getUserTimeline();
+    $client = new TwitterApiExchange($twitter->getApiInfo());
+
+    $twitter = new Twitter($client);
+    $stats = $twitter->getUserStats('https://api.twitter.com/1.1/users/show.json');
+    $tweets = $twitter->getUserTimeline('https://api.twitter.com/1.1/statuses/user_timeline.json');
 
     $view_data = array(
         'stats' => $stats,

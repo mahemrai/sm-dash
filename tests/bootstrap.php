@@ -24,8 +24,6 @@ class Slim_Framework_TestCase extends PHPUnit_Framework_TestCase {
         require __DIR__ . '/../app/routes/scoopit.php';
         require __DIR__ . '/../app/routes/settings.php';
 
-        require __DIR__ . '/../app/models/Accounts.php';
-
         $this->app = $app;
     }
 
