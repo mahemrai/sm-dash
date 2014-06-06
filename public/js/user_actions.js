@@ -1,11 +1,11 @@
 /**
- * Script to handle all the user actions such as favoriting a tweet or viewing  
- * an image. Performs ajax request to appropriate route depending on the action 
+ * Script to handle all the user actions such as favoriting a tweet or viewing
+ * an image. Performs ajax request to appropriate route depending on the action
  * carried out by the user.
  */
 
 $(document).ready(function() {
-    //send ajax request to perform retweet action when user 
+    //send ajax request to perform retweet action when user
     //clicks on retweet button
     $('a.retweet').click(function() {
         var tweet_id = $(this).attr('value');
@@ -19,7 +19,7 @@ $(document).ready(function() {
         sendPostRequest(url, json, elem, replacementHtml);
     });
 
-    //send ajax request to perform favorite action when user 
+    //send ajax request to perform favorite action when user
     //clicks on favorite button
     $('a.favorite').click(function() {
         var tweet_id = $(this).attr('value');
@@ -40,10 +40,10 @@ $(document).ready(function() {
         $('.modal-body').html('<img src="'+image_src+'"/>');
     });
 
-    $('li#menu').click(function() {    
+    $('li#menu').click(function() {
     });
 
-    //send ajax request to perform tweet action when user submits form 
+    //send ajax request to perform tweet action when user submits form
     //to post a new tweet
     $('form#tweetForm').submit(function(event) {
         event.preventDefault();
@@ -52,13 +52,12 @@ $(document).ready(function() {
         var url = '/twitter/tweet';
         var json = { status: text };
 
-        //$('i#post').replaceWith('<i id="post" class="fa fa-refresh fa-spin"></i>');
         $('#tweet-post').modal('show');
 
         sendPostRequest(url, json, null, null);
     });
 
-    //send ajax request to perform delete action when user clicks on 
+    //send ajax request to perform delete action when user clicks on
     //delete button to delete the tweet
     $('a.delete').click(function() {
         var tweet_id = $(this).attr('value');
@@ -72,7 +71,7 @@ $(document).ready(function() {
         sendPostRequest(url, json, elem, replacementHtml);
     });
 
-    //send ajax request to perform topic loading action when user clicks 
+    //send ajax request to perform topic loading action when user clicks
     //or selects the topic to view
     $('button.load-topic').click(function() {
         var topic_id = $(this).attr('value');
@@ -87,6 +86,9 @@ $(document).ready(function() {
         });
     });
 
+    //send ajax request to retrieve information for the selected account
+    //and populate input elements with the appropriate data when the modal
+    //loads
     $('a#account-info').click(function() {
         $('div.message').html('');
 
@@ -117,6 +119,7 @@ $(document).ready(function() {
         });
     });
 
+    //send ajax request to add or update account settings when user submits the form
     $('form').submit(function(e) {
         e.preventDefault();
 
@@ -140,7 +143,7 @@ $(document).ready(function() {
 });
 
 /**
- * Sends POST request to the server with json data and processes the 
+ * Sends POST request to the server with json data and processes the
  * response.
  */
 function sendPostRequest(url, json, elem, replacementHtml) {
@@ -150,7 +153,6 @@ function sendPostRequest(url, json, elem, replacementHtml) {
 
             if(response.result) {
                 if(elem === null) {
-                    //$('i#post').replaceWith('<i id="post" class="fa fa-pencil-square-o"></i>');
                     $('#tweet-post').modal('hide');
                 }
                 else $(elem).replaceWith(replacementHtml);
@@ -160,8 +162,9 @@ function sendPostRequest(url, json, elem, replacementHtml) {
 }
 
 /**
- * Replaces text of the select elements to display information about the selected 
+ * Replaces text of the select elements to display information about the selected
  * topic.
+ * @param json response
  */
 function redrawTopicInfo(response) {
     $('#topic-name').text(response.result.name);
@@ -176,6 +179,7 @@ function redrawTopicInfo(response) {
 
 /**
  * Replaces posts with posts related to the selected topic.
+ * @param json response
  */
 function redrawPosts(response) {
     var html = '';
