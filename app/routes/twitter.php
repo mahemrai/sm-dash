@@ -13,9 +13,12 @@ $app->post('/twitter/retweet', function() use ($app) {
     require '../app/models/Twitter.php';
 
     $twitter = new Twitter();
+    $client = new TwitterAPIExchange($twitter->getApiInfo());
+
+    $url = 'https://api.twitter.com/1.1/statuses/retweet/'.$tweet_id.'.json';
     $tweet_id = $app->request->post('id');
 
-    if($twitter->postRetweet($tweet_id)) {
+    if($twitter->postRetweet($url, $tweet_id)) {
         echo json_encode(array('result' => true));
     }
     else echo json_encode(array('result' => false));
@@ -29,9 +32,12 @@ $app->post('/twitter/favorite', function() use ($app) {
     require '../app/models/Twitter.php';
 
     $twitter = new Twitter();
-    $tweet_id = $app->request->post('id');
+    $client = new TwitterAPIExchange($twitter->getApiInfo());
 
-    if($twitter->postFavorite($tweet_id)) {
+    $tweet_id = $app->request->post('id');
+    $url = 'https://api.twitter.com/1.1/favorites/create.json';
+
+    if($twitter->postFavorite($url, $tweet_id)) {
         echo json_encode(array('result' => true));
     }
     else echo json_encode(array('result' => false));
@@ -45,9 +51,12 @@ $app->post('/twitter/tweet', function() use ($app) {
     require '../app/models/Twitter.php';
 
     $twitter = new Twitter();
+    $client = new TwitterAPIExchange($twitter->getApiInfo());
+
+    $url = 'https://api.twitter.com/1.1/statuses/update.json';
     $status = $app->request->post('status');
 
-    if($twitter->postTweet($status)) {
+    if($twitter->postTweet($url, $status)) {
         echo json_encode(array('result' => true));
     }
     else echo json_encode(array('result' => false));
@@ -61,9 +70,12 @@ $app->post('/twitter/delete', function() use ($app) {
     require '../app/models/Twitter.php';
 
     $twitter = new Twitter();
-    $tweet_id = $app->request->post('id');
+    $client = new TwitterAPIExchange($twitter->getApiInfo());
 
-    if($twitter->deleteTweet($tweet_id)) {
+    $tweet_id = $app->request->post('id');
+    $url = 'https://api.twitter.com/1.1/statuses/destroy/'.$tweet_id.'.json';
+
+    if($twitter->deleteTweet($url, $tweet_id)) {
         echo json_encode(array('result' => true));
     }
     else echo json_encode(array('result' => false));

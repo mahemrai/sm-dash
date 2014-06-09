@@ -22,9 +22,10 @@ $app->get('/', function() use ($app) {
     }
     else $scoops = $scoopit->getCompilation(20);
 
+    $twitter = new Twitter();
     $client = new TwitterApiExchange($twitter->getApiInfo());
+    $twitter->setClient($client);
 
-    $twitter = new Twitter($client);
     $tweets = $twitter->getHomeTimeline('https://api.twitter.com/1.1/statuses/home_timeline.json');
 
     $view_data = array(
@@ -41,9 +42,10 @@ $app->get('/', function() use ($app) {
 $app->get('/twitter', function() use ($app) {
     require '../app/models/Twitter.php';
 
+    $twitter = new Twitter();
     $client = new TwitterApiExchange($twitter->getApiInfo());
+    $twitter->setClient($client);
 
-    $twitter = new Twitter($client);
     $stats = $twitter->getUserStats('https://api.twitter.com/1.1/users/show.json');
     $tweets = $twitter->getUserTimeline('https://api.twitter.com/1.1/statuses/user_timeline.json');
 

@@ -10,10 +10,12 @@ class Twitter {
     const USERNAME = 'mahemrai';
 
     private $client;
-    private $settings;
 
-    //constructor
-    public function __construct(TwitterApiExchange $client) {
+    /**
+     * Sets client object to make calls to Twitter API.
+     * @param TwitterApiExchange $client 
+     */
+    public function setClient(TwitterApiExchange $client) {
         $this->client = $client;
     }
 
@@ -22,7 +24,6 @@ class Twitter {
      * @return array
      */
     public function getHomeTimeline($url) {
-        //$url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
         $request_method = 'GET';
 
         $tweets = json_decode($this->client->buildOauth($url, $request_method)->performRequest());
@@ -37,7 +38,6 @@ class Twitter {
      * @return array
      */
     public function getUserTimeline($url) {
-        //$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
         $request_method = 'GET';
 
         $tweets = json_decode($this->client->buildOauth($url, $request_method)->performRequest());
@@ -47,8 +47,12 @@ class Twitter {
         return $data;
     }
 
-    public function getUserStats() {
-        //$url = 'https://api.twitter.com/1.1/users/show.json';
+    /**
+     * Get user stats from Twitter
+     * @param string $url
+     * @return array
+     */
+    public function getUserStats($url) {
         $request_method = 'GET';
 
         $response = json_decode(
@@ -78,17 +82,15 @@ class Twitter {
      * @param string $tweet_text
      * @return boolean
      */
-    public function postTweet($tweet_text) {
-        $url = 'https://api.twitter.com/1.1/statuses/update.json';
+    public function postTweet($url, $tweet_text) {
         $request_method = 'POST';
 
         $postfield = array(
             'status' => $tweet_text
         );
 
-        $client = new TwitterApiExchange($this->settings);
         $response = json_decode(
-            $client->buildOauth($url, $request_method)
+            $this->client->buildOauth($url, $request_method)
                    ->setPostfields($postfield)
                    ->performRequest()
         );
@@ -101,17 +103,15 @@ class Twitter {
      * @param int tweet_id
      * @return boolean
      */
-    public function postRetweet($tweet_id) {
-        $url = 'https://api.twitter.com/1.1/statuses/retweet/'.$tweet_id.'.json';
+    public function postRetweet($url, $tweet_id) {
         $request_method = 'POST';
 
         $postfield = array(
             'id' => $tweet_id
         );
 
-        $client = new TwitterApiExchange($this->settings);
         $response = json_decode(
-            $client->buildOauth($url, $request_method)
+            $this->client->buildOauth($url, $request_method)
                    ->setPostfields($postfield)
                    ->performRequest()
         );
@@ -123,17 +123,15 @@ class Twitter {
      * Send POST request to twitter to complete user's favorite action.
      * @return boolean
      */
-    public function postFavorite($tweet_id) {
-        $url = 'https://api.twitter.com/1.1/favorites/create.json';
+    public function postFavorite($url, $tweet_id) {
         $request_method = 'POST';
 
         $postfield = array(
             'id' => $tweet_id
         );
 
-        $client = new TwitterApiExchange($this->settings);
         $response = json_decode(
-            $client->buildOauth($url, $request_method)
+            $this->client->buildOauth($url, $request_method)
                    ->setPostfields($postfield)
                    ->performRequest()
         );
@@ -146,17 +144,15 @@ class Twitter {
      * @param int $tweet_id
      * @return bolean
      */
-    public function deleteTweet($tweet_id) {
-        $url = 'https://api.twitter.com/1.1/statuses/destroy/'.$tweet_id.'.json';
+    public function deleteTweet($url, $tweet_id) {
         $request_method = 'POST';
 
         $postfield = array(
             'id' => $tweet_id
         );
 
-        $client = new TwitterApiExchange($this->settings);
         $response = json_decode(
-            $client->buildOauth($url, $request_method)
+            $this->client->buildOauth($url, $request_method)
                    ->setPostfields($postfield)
                    ->performRequest()
         );
@@ -174,7 +170,7 @@ class Twitter {
             ->find_one()
             ->as_array();
 
-        $this->settings = array(
+        return array(
             'oauth_access_token' => $api_info['oauth_token'],
             'oauth_access_token_secret' => $api_info['oauth_token_secret'],
             'consumer_key' => $api_info['api_key'],

@@ -30,7 +30,7 @@
                     {% if tweet.retweeted %}
                         <span class="label label-info">Retweeted</span>
                     {% else %}
-                        <a id="retweet-{{ tweet.id }}" class="btn btn-primary btn-sm retweet" value="{{ tweet.id }}">
+                        <a id="retweet-{{ tweet.id }}" class="btn btn-warning btn-sm retweet" value="{{ tweet.id }}">
                             <i id="retweet-{{ tweet.id }}" class="fa fa-retweet"></i> Retweet
                         </a>
                     {% endif %}
@@ -38,7 +38,7 @@
                     {% if tweet.favorited %}
                         <span class="label label-warning">Favorited</span>
                     {% else %}
-                        <a id="favorite-{{ tweet.id }}" class="btn btn-primary btn-sm favorite" value="{{ tweet.id }}">
+                        <a id="favorite-{{ tweet.id }}" class="btn btn-warning btn-sm favorite" value="{{ tweet.id }}">
                             <i id="favorite-{{ tweet.id }}" class="fa fa-star"></i> Favorite
                         </a>
                     {% endif %}
@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <a href="{{ scoop.url }}" target="_blank" class="btn btn-primary btn-sm">
+                    <a href="{{ scoop.url }}" target="_blank" class="btn btn-warning btn-sm">
                         <i class="fa fa-eye"></i> View
                     </a>
                 </div>
