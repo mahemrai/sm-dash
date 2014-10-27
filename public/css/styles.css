@@ -5835,7 +5835,7 @@ div.well a#account-info {
 div.modal-body img {
   width: 100%;
 }
-div.modal-body i.fa-plus-circle {
+div.modal-body i.fa-plus {
   transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   -webkit-transform: rotate(45deg);

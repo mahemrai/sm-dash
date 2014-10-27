@@ -50,14 +50,14 @@
                 <h3>User Topics</h3>
                 {% for user_topic in topics.user_topics %}
                     <p>
-                        <button id="topic-{{ user_topic.id }}" class="btn btn-default load-topic" value="{{ user_topic.id }}">{{ user_topic.name }}</button>
+                        <button id="topic-{{ user_topic.id }}" class="btn btn-block btn-primary load-topic" value="{{ user_topic.id }}">{{ user_topic.name }}</button>
                     </p>
                 {% endfor %}
 
                 <h3>Followed Topics</h3>
                 {% for followed_topic in topics.followed_topics %}
                     <p>
-                        <button id="topic-{{ followed_topic.id }}" class="btn btn-default load-topic" value="{{ followed_topic.id }}">{{ followed_topic.name }}</button>
+                        <button id="topic-{{ followed_topic.id }}" class="btn btn-block btn-primary load-topic" value="{{ followed_topic.id }}">{{ followed_topic.name }}</button>
                     </p>
                 {% endfor %}
             </div>
@@ -92,7 +92,7 @@
                         </div>
 
                         <div class="col-sm-6">
-                            <a href="{{ post.url }}" target="_blank" class="btn btn-primary btn-sm">
+                            <a href="{{ post.url }}" target="_blank" class="btn btn-warning btn-sm">
                                 <i class="fa fa-eye"></i> View
                             </a>
                         </div>

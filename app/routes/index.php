@@ -10,28 +10,37 @@
  * feeds from Twitter and Scoop.it.
  */
 $app->get('/', function() use ($app) {
+    require '../app/models/Accounts.php';
     require '../app/models/Twitter.php';
     require '../app/models/Scoopit.php';
 
-    $scoopit = new Scoopit();
+    $accounts = new Accounts();
 
-    //authorise user with scoopit if the access token is no longer
-    //valid otherwise load scoops for the user
-    if(empty($_SESSION['SCOOPIT_ACCESS_TOKEN'])) {
-        $scoopit->authorise();
+    if (!$accounts->getApiAccount('Twitter')) {
+        $view_data['twitter_no_account'] = true;
+    } else {
+        $twitter = new Twitter();
+        $client = new TwitterApiExchange($twitter->getApiInfo());
+        $twitter->setClient($client);
+
+        $tweets = $twitter->getHomeTimeline('https://api.twitter.com/1.1/statuses/home_timeline.json');
+        $view_data['tweets'] = $tweets;
     }
-    else $scoops = $scoopit->getCompilation(20);
 
-    $twitter = new Twitter();
-    $client = new TwitterApiExchange($twitter->getApiInfo());
-    $twitter->setClient($client);
+    if (!$accounts->getApiAccount('Scoopit')) {
+        $view_data['twitter_no_account'] = true;
+    } else {
+        $scoopit = new Scoopit();
 
-    $tweets = $twitter->getHomeTimeline('https://api.twitter.com/1.1/statuses/home_timeline.json');
-
-    $view_data = array(
-        'tweets' => $tweets,
-        'scoops' => $scoops
-    );
+        //authorise user with scoopit if the access token is no longer
+        //valid otherwise load scoops for the user
+        if(empty($_SESSION['SCOOPIT_ACCESS_TOKEN'])) {
+            $view_data['scoopit_login'] = true;
+        } else {
+            $scoops = $scoopit->getCompilation(20);
+            $view_data['scoops'] = $scoops;
+        }
+    }
 
     $app->render('home.html.twig', $view_data);
 });

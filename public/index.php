@@ -38,6 +38,9 @@ file_put_contents('css/styles.css', $css);
 //start our session
 session_start();
 
+\BurningDiode\Slim\Config\Yaml::getInstance()->addFile('../config/app.yml');
+$_SESSION['config'] = $app->config('application');
+
 //main application routes
 require '../app/routes/index.php';
 

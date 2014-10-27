@@ -4,81 +4,100 @@
 <div class="col-sm-6">
     <h2><i class="fa fa-twitter-square"></i> Twitter</h2>
 
-    {% for tweet in tweets %}
+    {% if twitter_no_account %}
         <div class="well">
-            <div class="row" id="header">
-                <div class="col-sm-12">
-                    <p>
-                        <img class="img-circle" src="{{ tweet.user.profile_image_url }}"/>
-                        <a href="http://twitter.com/{{ tweet.user.screen_name }}"><strong>{{ tweet.user.name }}</strong></a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="row" id="content">
-                <div class="col-sm-12">{{ display_tweet(tweet.text, tweet.entities) }}</div>
-            </div>
-
-            <div class="row" id="footer">
-                <div class="col-sm-6">
-                    <span>
-                        <strong>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</strong>
-                    </span>
-                </div>
-
-                <div class="col-sm-6">
-                    {% if tweet.retweeted %}
-                        <span class="label label-info">Retweeted</span>
-                    {% else %}
-                        <a id="retweet-{{ tweet.id }}" class="btn btn-warning btn-sm retweet" value="{{ tweet.id }}">
-                            <i id="retweet-{{ tweet.id }}" class="fa fa-retweet"></i> Retweet
-                        </a>
-                    {% endif %}
-
-                    {% if tweet.favorited %}
-                        <span class="label label-warning">Favorited</span>
-                    {% else %}
-                        <a id="favorite-{{ tweet.id }}" class="btn btn-warning btn-sm favorite" value="{{ tweet.id }}">
-                            <i id="favorite-{{ tweet.id }}" class="fa fa-star"></i> Favorite
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
+            <p>Account does not exist.</p>
         </div>
-    {% endfor %}
+    {% else %}
+        {% for tweet in tweets %}
+            <div class="well">
+                <div class="row" id="header">
+                    <div class="col-sm-12">
+                        <p>
+                            <img class="img-circle" src="{{ tweet.user.profile_image_url }}"/>
+                            <a href="http://twitter.com/{{ tweet.user.screen_name }}"><strong>{{ tweet.user.name }}</strong></a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row" id="content">
+                    <div class="col-sm-12">{{ display_tweet(tweet.text, tweet.entities) }}</div>
+                </div>
+
+                <div class="row" id="footer">
+                    <div class="col-sm-6">
+                        <span>
+                            <strong>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }}</strong>
+                        </span>
+                    </div>
+
+                    <div class="col-sm-6">
+                        {% if tweet.retweeted %}
+                            <span class="label label-info">Retweeted</span>
+                        {% else %}
+                            <a id="retweet-{{ tweet.id }}" class="btn btn-warning btn-sm retweet" value="{{ tweet.id }}">
+                                <i id="retweet-{{ tweet.id }}" class="fa fa-retweet"></i> Retweet
+                            </a>
+                        {% endif %}
+
+                        {% if tweet.favorited %}
+                            <span class="label label-warning">Favorited</span>
+                        {% else %}
+                            <a id="favorite-{{ tweet.id }}" class="btn btn-warning btn-sm favorite" value="{{ tweet.id }}">
+                                <i id="favorite-{{ tweet.id }}" class="fa fa-star"></i> Favorite
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 
 <div class="col-sm-6">
     <h2>Scoop.it</h2>
 
-    {% for scoop in scoops %}
+    {% if scoopit_no_account %}
         <div class="well">
-            <div class="row" id="content">
-                {% if scoop.image %}
-                    <div class="col-sm-12">
-                        <div class="col-sm-5"><img src="{{ scoop.image }}" /></div>
-                        <div class="col-sm-7"><span>{{ scoop.title }}</span></div>
-                    </div>
-                {% else %}
-                    <div class="col-sm-12"><span>{{ scoop.title }}</span></div>
-                {% endif %}
-            </div>
-
-            <div class="row" id="footer">
-                <div class="col-sm-6">
-                    <span>
-                        Reactions: {{ scoop.reactionsCount }} Comments: {{ scoop.commentsCount }} Thanks: {{ scoop.thanksCount }}
-                    </span>
-                </div>
-
-                <div class="col-sm-6">
-                    <a href="{{ scoop.url }}" target="_blank" class="btn btn-warning btn-sm">
-                        <i class="fa fa-eye"></i> View
-                    </a>
-                </div>
-            </div>
+            <p>Account does not exist.</p>
         </div>
-    {% endfor %}
+    {% else %}
+        {% if scoopit_login %}
+            <div class="well">
+                <p>You are not logged in.</p>
+                <a class="btn btn-primary" href="/scoopit/login">Login</a>
+            </div>
+        {% else %}
+            {% for scoop in scoops %}
+                <div class="well">
+                    <div class="row" id="content">
+                        {% if scoop.image %}
+                            <div class="col-sm-12">
+                                <div class="col-sm-5"><img src="{{ scoop.image }}" /></div>
+                                <div class="col-sm-7"><span>{{ scoop.title }}</span></div>
+                            </div>
+                        {% else %}
+                            <div class="col-sm-12"><span>{{ scoop.title }}</span></div>
+                        {% endif %}
+                    </div>
+
+                    <div class="row" id="footer">
+                        <div class="col-sm-6">
+                            <span>
+                                Reactions: {{ scoop.reactionsCount }} Comments: {{ scoop.commentsCount }} Thanks: {{ scoop.thanksCount }}
+                            </span>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <a href="{{ scoop.url }}" target="_blank" class="btn btn-warning btn-sm">
+                                <i class="fa fa-eye"></i> View
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
 </div>
 
 <div id="image-viewer" class="modal fade">

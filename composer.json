@@ -16,7 +16,8 @@
         "slim/views": "0.1.*",
         "j7mbo/twitter-api-php": "dev-master",
         "oyejorge/less.php": "~1.5",
-        "zendframework/zendoauth": "2.0.*@dev"
+        "zendframework/zendoauth": "2.0.*@dev",
+        "techsterx/slim-config-yaml": "1.*"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "1.*",

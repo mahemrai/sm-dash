@@ -38,8 +38,10 @@ $app->get('/accounts/:account', function($account_name) use ($app) {
 
     $account = new Accounts();
     $info = $account->getApiAccount($account_name);
+    //echo '<pre>';
+    //var_dump($info);die;
 
-    if(!empty($info)) {
+    if($info) {
         echo json_encode(
             array('data' => $info)
         );

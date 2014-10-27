@@ -29,7 +29,8 @@ class Accounts {
     public function getApiAccount($account) {
         $query = ORM::for_table('sm_accounts')
             ->where('account', $account)
-            ->find_one();
+            ->find_one()
+            ->as_array();
 
         return $query;
     }

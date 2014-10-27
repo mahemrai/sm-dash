@@ -6,3 +6,4 @@ app/cache
 composer.lock
 config/database.php
 node_modules/*
+test.db

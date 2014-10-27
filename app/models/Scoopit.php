@@ -6,8 +6,8 @@
  */
 class Scoopit {
     const SCOOPIT = 'scoopit';
-    const TOPIC = 'all-things-interesting';
 
+    private $topic;
     private $config;
     private $api_key;
     private $api_secret;
@@ -15,6 +15,7 @@ class Scoopit {
 
     //constructor
     public function __construct() {
+        $this->topic = $_SESSION['config']['scoopit']['topic'];
         $this->getConfig();
     }
 

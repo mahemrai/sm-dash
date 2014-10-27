@@ -1,4 +1,10 @@
 <?php
+$app->get('/scoopit/login', function() use ($app) {
+    require '../app/models/Scoopit.php';
+    $scoopit = new Scoopit();
+    $scoopit->authorise();
+});
+
 $app->get('/scoopit/authenticate', function() use ($app) {
     require '../app/models/Scoopit.php';
 

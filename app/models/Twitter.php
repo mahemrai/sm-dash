@@ -7,8 +7,8 @@
  */
 class Twitter {
     const TWITTER = 'Twitter';
-    const USERNAME = 'mahemrai';
-
+    
+    private $username;
     private $client;
 
     /**
@@ -16,6 +16,7 @@ class Twitter {
      * @param TwitterApiExchange $client 
      */
     public function setClient(TwitterApiExchange $client) {
+        $this->username = $_SESSION['config']['twitter']['username'];
         $this->client = $client;
     }
 

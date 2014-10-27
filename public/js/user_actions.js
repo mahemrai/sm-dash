@@ -101,6 +101,7 @@ $(document).ready(function() {
 
         $.get("/accounts/"+account, function(data) {
             var info = JSON.parse(data);
+            console.log(info.data);
 
             $('#api-account').val(account);
             $('#api-key').val(info.data.api_key);
@@ -195,7 +196,7 @@ function redrawPosts(response) {
         html += '<div class="row" id="footer"><div class="col-sm-6">';
         html += '<span>Reactions: '+post['reactionsCount']+' Comments: '+post['commentsCount']+' Thanks: '+post['thanksCount']+'</span></div>';
         html += '<div class="col-sm-6">';
-        html += '<a href="'+post['url']+'" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View</a></div>';
+        html += '<a href="'+post['url']+'" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> View</a></div>';
         html += '</div></div>';
     }
 
