@@ -5,12 +5,6 @@
  * @author Mahendra Rai
  */
 
-$app->get('/twitter/login', function() use ($app) {
-    require '../app/models/Twitter.php';
-
-    $twitter = new Twitter();
-});
-
 /**
  * Handle retweet action of the user by sending a POST
  * request to Twitter.
@@ -19,7 +13,9 @@ $app->post('/twitter/retweet', function() use ($app) {
     require '../app/models/Twitter.php';
 
     $twitter = new Twitter();
-    $client = new TwitterAPIExchange($twitter->getApiInfo());
+    $client = new TwitterAPIExchange(
+        $twitter->getApiInfo($app->config('application')['twitter'])
+    );
     $twitter->setClient($client);
 
     $url = 'https://api.twitter.com/1.1/statuses/retweet/'.$tweet_id.'.json';
@@ -39,7 +35,9 @@ $app->post('/twitter/favorite', function() use ($app) {
     require '../app/models/Twitter.php';
 
     $twitter = new Twitter();
-    $client = new TwitterAPIExchange($twitter->getApiInfo());
+    $client = new TwitterAPIExchange(
+        $twitter->getApiInfo($app->config('application')['twitter'])
+    );
     $twitter->setClient($client);
 
     $tweet_id = $app->request->post('id');
@@ -59,7 +57,9 @@ $app->post('/twitter/tweet', function() use ($app) {
     require '../app/models/Twitter.php';
 
     $twitter = new Twitter();
-    $client = new TwitterAPIExchange($twitter->getApiInfo());
+    $client = new TwitterAPIExchange(
+        $twitter->getApiInfo($app->config('application')['twitter'])
+    );
     $twitter->setClient($client);
 
     $url = 'https://api.twitter.com/1.1/statuses/update.json';
@@ -79,7 +79,9 @@ $app->post('/twitter/delete', function() use ($app) {
     require '../app/models/Twitter.php';
 
     $twitter = new Twitter();
-    $client = new TwitterAPIExchange($twitter->getApiInfo());
+    $client = new TwitterAPIExchange(
+        $twitter->getApiInfo($app->config('application')['twitter'])
+    );
     $twitter->setClient($client);
 
     $tweet_id = $app->request->post('id');

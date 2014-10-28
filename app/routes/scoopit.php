@@ -1,14 +1,14 @@
 <?php
 $app->get('/scoopit/login', function() use ($app) {
     require '../app/models/Scoopit.php';
-    $scoopit = new Scoopit();
+    $scoopit = new Scoopit($app->config('application')['scoopit']);
     $scoopit->authorise();
 });
 
 $app->get('/scoopit/authenticate', function() use ($app) {
     require '../app/models/Scoopit.php';
 
-    $scoopit = new Scoopit();
+    $scoopit = new Scoopit($app->config('application')['scoopit']);
 
     if(isset($_GET['oauth_token'])) {
         if(empty($_SESSION['SCOOPIT_ACCESS_TOKEN'])) {
@@ -25,7 +25,7 @@ $app->get('/scoopit/authenticate', function() use ($app) {
 $app->get('/scoopit/topic/:id', function($id) use ($app) {
     require '../app/models/Scoopit.php';
 
-    $scoopit = new Scoopit();
+    $scoopit = new Scoopit($app->config('application')['scoopit']);
     $topic = $scoopit->getTopic($id);
 
     echo json_encode(array('result' => $topic));

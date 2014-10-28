@@ -14,26 +14,28 @@ $app->get('/', function() use ($app) {
     require '../app/models/Twitter.php';
     require '../app/models/Scoopit.php';
 
-    $accounts = new Accounts();
+    $accounts = new Accounts($app->config('application'));
 
-    if (!$accounts->getApiAccount('Twitter')) {
+    if (!$accounts->apiConfigExists('twitter')) {
         $view_data['twitter_no_account'] = true;
     } else {
         $twitter = new Twitter();
-        $client = new TwitterApiExchange($twitter->getApiInfo());
+        $client = new TwitterApiExchange(
+            $twitter->getApiInfo($app->config('application')['twitter'])
+        );
         $twitter->setClient($client);
 
         $tweets = $twitter->getHomeTimeline('https://api.twitter.com/1.1/statuses/home_timeline.json');
         $view_data['tweets'] = $tweets;
     }
 
-    if (!$accounts->getApiAccount('Scoopit')) {
+    if (!$accounts->apiConfigExists('scoopit')) {
         $view_data['twitter_no_account'] = true;
     } else {
-        $scoopit = new Scoopit();
+        $scoopit = new Scoopit($app->config('application')['scoopit']);
 
-        //authorise user with scoopit if the access token is no longer
-        //valid otherwise load scoops for the user
+        //ask user to login to scoopit account if the access token 
+        //is no longer valid otherwise load scoops for the user
         if(empty($_SESSION['SCOOPIT_ACCESS_TOKEN'])) {
             $view_data['scoopit_login'] = true;
         } else {
@@ -52,7 +54,9 @@ $app->get('/twitter', function() use ($app) {
     require '../app/models/Twitter.php';
 
     $twitter = new Twitter();
-    $client = new TwitterApiExchange($twitter->getApiInfo());
+    $client = new TwitterApiExchange(
+        $twitter->getApiInfo($app->config('application')['twitter'])
+    );
     $twitter->setClient($client);
 
     $stats = $twitter->getUserStats('https://api.twitter.com/1.1/users/show.json');
@@ -72,7 +76,7 @@ $app->get('/twitter', function() use ($app) {
 $app->get('/scoopit', function() use ($app) {
     require '../app/models/Scoopit.php';
 
-    $scoopit = new Scoopit();
+    $scoopit = new Scoopit($app->config('application')['scoopit']);
     $topics = $scoopit->getUserTopics();
     $topic = $scoopit->getTopic();
 
@@ -82,11 +86,4 @@ $app->get('/scoopit', function() use ($app) {
     );
 
     $app->render('scoopit.html.twig', $view_data);
-});
-
-/**
- * Load settings page for the user.
- */
-$app->get('/settings', function() use ($app) {
-    $app->render('settings.html.twig');
 });

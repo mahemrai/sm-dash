@@ -1,6 +1,5 @@
 <?php
 require '../vendor/autoload.php';
-require '../config/database.php';
 require '../app/helpers/TwitterHelper.php';
 
 //Slim app configuration
@@ -39,7 +38,7 @@ file_put_contents('css/styles.css', $css);
 session_start();
 
 \BurningDiode\Slim\Config\Yaml::getInstance()->addFile('../config/app.yml');
-$_SESSION['config'] = $app->config('application');
+$app->config('application');
 
 //main application routes
 require '../app/routes/index.php';
@@ -49,9 +48,6 @@ require '../app/routes/twitter.php';
 
 //scoopit routes
 require '../app/routes/scoopit.php';
-
-//settings routes
-require '../app/routes/settings.php';
 
 $app->run();
 ?>

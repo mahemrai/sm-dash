@@ -9,14 +9,11 @@ class Scoopit {
 
     private $topic;
     private $config;
-    private $api_key;
-    private $api_secret;
-    private $data = array();
 
     //constructor
-    public function __construct() {
-        $this->topic = $_SESSION['config']['scoopit']['topic'];
-        $this->getConfig();
+    public function __construct($api_config) {
+        $this->topic = $_SESSION['config']['scoopit']['default_topic'];
+        $this->config = $this->getConfig($api_config);
     }
 
     /**
@@ -80,7 +77,7 @@ class Scoopit {
         $client = $token->getHttpClient($this->config);
 
         ($id) ? $client->setUri("http://www.scoop.it/api/1/topic?id=".$id."&ncomments=0") : 
-                $client->setUri("http://www.scoop.it/api/1/topic?urlName=".self::TOPIC."&ncomments=0");
+                $client->setUri("http://www.scoop.it/api/1/topic?urlName=".$this->topic."&ncomments=0");
 
         $client->setMethod(Zend\Http\Request::METHOD_GET);
 
@@ -130,20 +127,15 @@ class Scoopit {
      * the api client.
      * @return array
      */
-    protected function getConfig() {
-        $api_info = ORM::for_table('sm_accounts')
-            ->where('account', self::SCOOPIT)
-            ->find_one()
-            ->as_array();
-
-        $this->config = array(
-            'callbackUrl' => 'http://localhost:8117/scoopit/authenticate',
+    private function getConfig($api_config) {
+        return array(
+            'callbackUrl' => $api_config['callback_url'],
             'siteUrl' => 'http://www.scoop.it/oauth',
             'requestTokenUrl' => 'http://www.scoop.it/oauth/request',
             'accessTokenUrl' => 'http://www.scoop.it/oauth/access',
             'authorizeUrl' => 'http://www.scoop.it/oauth/authorize',
-            'consumerKey' => $api_info['api_key'],
-            'consumerSecret' => $api_info['api_secret']
+            'consumerKey' => $api_config['api_key'],
+            'consumerSecret' => $api_config['api_secret']
         );
     }
 
@@ -152,7 +144,7 @@ class Scoopit {
      * @param object $posts 
      * @return array
      */
-    protected function extractPosts($posts) {
+    private function extractPosts($posts) {
         $data = array();
 
         foreach($posts as $post) {

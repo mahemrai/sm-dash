@@ -1,0 +1,12 @@
+application:
+    twitter:
+        username: YOUR-USERNAME
+        api_key: YOUR-API-KEY
+        api_secret: YOUR-API-SECRET
+        oauth_token: YOUR-OAUTH-TOKEN
+        oauth_token_secret: YOUR-OAUTH-TOKEN-SECRET
+    scoopit:
+        default_topic: YOUR-DEFAULT-TOPIC
+        api_key: YOUR-API-KEY
+        api_secret: YOUR-API-SECRET
+        callback_url: YOUR-CALLBACK-URL

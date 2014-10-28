@@ -165,17 +165,12 @@ class Twitter {
      * Retrieve api information from the database.
      * @return array
      */
-    public function getApiInfo() {
-        $api_info = ORM::for_table('sm_accounts')
-            ->where('account', self::TWITTER)
-            ->find_one()
-            ->as_array();
-
+    public function getApiInfo($api_config) {
         return array(
-            'oauth_access_token' => $api_info['oauth_token'],
-            'oauth_access_token_secret' => $api_info['oauth_token_secret'],
-            'consumer_key' => $api_info['api_key'],
-            'consumer_secret' => $api_info['api_secret']
+            'oauth_access_token' => $api_config['oauth_token'],
+            'oauth_access_token_secret' => $api_config['oauth_token_secret'],
+            'consumer_key' => $api_config['api_key'],
+            'consumer_secret' => $api_config['api_secret']
         );
     }
 
@@ -185,7 +180,7 @@ class Twitter {
      * @param object $tweet
      * @return string
      */
-    protected function selectTweetContent($tweet) {
+    private function selectTweetContent($tweet) {
         return (isset($tweet->retweeted_status)) ?
             $tweet->retweeted_status->text : $tweet->text;
     }
@@ -195,7 +190,7 @@ class Twitter {
      * @param type $tweets
      * @return type
      */
-    protected function extractData($tweets) {
+    private function extractData($tweets) {
         $data = array();
 
         foreach($tweets as $tweet) {
