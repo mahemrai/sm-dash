@@ -162,7 +162,7 @@ class Twitter {
     }
 
     /**
-     * Retrieve api information from the database.
+     * Construct api information from the config data retrived from YAML file.
      * @return array
      */
     public function getApiInfo($api_config) {

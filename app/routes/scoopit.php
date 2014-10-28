@@ -1,10 +1,16 @@
 <?php
+/**
+ * Authorise user and log them to their Scoopit account.
+ */
 $app->get('/scoopit/login', function() use ($app) {
     require '../app/models/Scoopit.php';
     $scoopit = new Scoopit($app->config('application')['scoopit']);
     $scoopit->authorise();
 });
 
+/**
+ * Authenticate user's Scoopit account.
+ */
 $app->get('/scoopit/authenticate', function() use ($app) {
     require '../app/models/Scoopit.php';
 
@@ -22,6 +28,9 @@ $app->get('/scoopit/authenticate', function() use ($app) {
     }
 });
 
+/**
+ * Load selected scoopit topic.
+ */
 $app->get('/scoopit/topic/:id', function($id) use ($app) {
     require '../app/models/Scoopit.php';
 

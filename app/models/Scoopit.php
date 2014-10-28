@@ -123,8 +123,7 @@ class Scoopit {
     }
 
     /**
-     * Retrieve api information from the database and set configuration data for 
-     * the api client.
+     * Construct api configuration from the data retrieved from YAML config file.
      * @return array
      */
     private function getConfig($api_config) {
