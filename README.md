@@ -29,18 +29,12 @@ Supported functionalities:
 
 ### Clone project
 
-Clone the project by running:
+Clone the project by running `git clone https://github.com/mahemrai/sm-dash.git`
 
-```
-git clone https://github.com/mahemrai/sm-dash.git
-```
 ### Run composer
 
-In the project root run:
+In the project root run `sudo composer install` to install project dependencies.
 
-```
-sudo composer install
-```
 ### Create API accounts
 
 Register and create API accounts for Twitter REST API and Scoop.it REST API.
