@@ -19,7 +19,7 @@ $app->get('/', function() use ($app) {
     if (!$accounts->apiConfigExists('twitter')) {
         $view_data['twitter_no_account'] = true;
     } else {
-        $twitter = new Twitter();
+        $twitter = new Twitter($app->config['application']['twitter']['username']);
         $client = new TwitterApiExchange(
             $twitter->getApiInfo($app->config('application')['twitter'])
         );
@@ -53,7 +53,7 @@ $app->get('/', function() use ($app) {
 $app->get('/twitter', function() use ($app) {
     require '../app/models/Twitter.php';
 
-    $twitter = new Twitter();
+    $twitter = new Twitter($app->config('application')['twitter']['username']);
     $client = new TwitterApiExchange(
         $twitter->getApiInfo($app->config('application')['twitter'])
     );

@@ -12,7 +12,7 @@
 $app->post('/twitter/retweet', function() use ($app) {
     require '../app/models/Twitter.php';
 
-    $twitter = new Twitter();
+    $twitter = new Twitter($app->config('application')['twitter']['username']);
     $client = new TwitterAPIExchange(
         $twitter->getApiInfo($app->config('application')['twitter'])
     );
@@ -34,7 +34,7 @@ $app->post('/twitter/retweet', function() use ($app) {
 $app->post('/twitter/favorite', function() use ($app) {
     require '../app/models/Twitter.php';
 
-    $twitter = new Twitter();
+    $twitter = new Twitter($app->config('application')['twitter']['username']);
     $client = new TwitterAPIExchange(
         $twitter->getApiInfo($app->config('application')['twitter'])
     );
@@ -56,7 +56,7 @@ $app->post('/twitter/favorite', function() use ($app) {
 $app->post('/twitter/tweet', function() use ($app) {
     require '../app/models/Twitter.php';
 
-    $twitter = new Twitter();
+    $twitter = new Twitter($app->config('application')['twitter']['username']);
     $client = new TwitterAPIExchange(
         $twitter->getApiInfo($app->config('application')['twitter'])
     );
@@ -78,7 +78,7 @@ $app->post('/twitter/tweet', function() use ($app) {
 $app->post('/twitter/delete', function() use ($app) {
     require '../app/models/Twitter.php';
 
-    $twitter = new Twitter();
+    $twitter = new Twitter($app->config('application')['twitter']['username']);
     $client = new TwitterAPIExchange(
         $twitter->getApiInfo($app->config('application')['twitter'])
     );

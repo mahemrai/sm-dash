@@ -11,12 +11,16 @@ class Twitter {
     private $username;
     private $client;
 
+    public function __construct($username) {
+        $this->username = $username;
+    }
+
     /**
      * Sets client object to make calls to Twitter API.
+     * @param string $username
      * @param TwitterApiExchange $client 
      */
     public function setClient(TwitterApiExchange $client) {
-        $this->username = $_SESSION['config']['twitter']['username'];
         $this->client = $client;
     }
 
@@ -57,7 +61,7 @@ class Twitter {
         $request_method = 'GET';
 
         $response = json_decode(
-            $this->client->setGetfield('?screen_name=mahemrai')
+            $this->client->setGetfield('?screen_name='.$this->username)
                    ->buildOauth($url, $request_method)
                    ->performRequest()
         );
@@ -170,7 +174,8 @@ class Twitter {
             'oauth_access_token' => $api_config['oauth_token'],
             'oauth_access_token_secret' => $api_config['oauth_token_secret'],
             'consumer_key' => $api_config['api_key'],
-            'consumer_secret' => $api_config['api_secret']
+            'consumer_secret' => $api_config['api_secret'],
+            'username' => $api_config['username']
         );
     }
 

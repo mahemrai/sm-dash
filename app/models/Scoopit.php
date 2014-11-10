@@ -12,8 +12,8 @@ class Scoopit {
 
     //constructor
     public function __construct($api_config) {
-        $this->topic = $_SESSION['config']['scoopit']['default_topic'];
         $this->config = $this->getConfig($api_config);
+        $this->topic = $this->config['defaultTopic'];
     }
 
     /**
@@ -134,7 +134,8 @@ class Scoopit {
             'accessTokenUrl' => 'http://www.scoop.it/oauth/access',
             'authorizeUrl' => 'http://www.scoop.it/oauth/authorize',
             'consumerKey' => $api_config['api_key'],
-            'consumerSecret' => $api_config['api_secret']
+            'consumerSecret' => $api_config['api_secret'],
+            'defaultTopic' => $api_config['default_topic']
         );
     }
 

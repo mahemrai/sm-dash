@@ -5772,11 +5772,21 @@ button.close {
     display: none !important;
   }
 }
+body {
+  padding-top: 70px;
+}
+h1.logo {
+  font-family: 'Oleo Script Swash Caps', cursive;
+  color: #fff;
+}
 h2 {
   color: #464646;
 }
 a {
   cursor: pointer;
+}
+div.container-fluid div.navbar-header {
+  margin-right: 20px;
 }
 div.well {
   border-radius: 0px;
@@ -5844,13 +5854,17 @@ div#stat {
   height: 60px;
   color: #4f4f4f;
 }
+nav.navbar {
+  border-radius: 0;
+  background-color: #2574a9;
+  border-color: #2574a9;
+}
 ul.nav {
   padding: 10px;
-  background: #abb7b7;
 }
 ul.nav li#menu a {
   color: #fff;
 }
 ul.nav li#menu a:hover {
-  color: #ccc;
+  color: #22313f;
 }
