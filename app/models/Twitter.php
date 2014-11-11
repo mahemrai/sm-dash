@@ -185,7 +185,7 @@ class Twitter {
      * @param object $tweet
      * @return string
      */
-    private function selectTweetContent($tweet) {
+    public function selectTweetContent($tweet) {
         return (isset($tweet->retweeted_status)) ?
             $tweet->retweeted_status->text : $tweet->text;
     }
@@ -195,25 +195,27 @@ class Twitter {
      * @param type $tweets
      * @return type
      */
-    private function extractData($tweets) {
-        $data = array();
+    public function extractData($tweets) {
+        if (!empty($tweets)) {
+            foreach($tweets as $tweet) {
+                $data_item = array(
+                    'id' => $tweet->id,
+                    'created_at' => $tweet->created_at,
+                    'text' => $this->selectTweetContent($tweet),
+                    'user' => $tweet->user,
+                    'retweet_count' => $tweet->retweet_count,
+                    'favorite_count' => $tweet->favorite_count,
+                    'entities' => $tweet->entities,
+                    'favorited' => $tweet->favorited,
+                    'retweeted' => $tweet->retweeted
+                );
 
-        foreach($tweets as $tweet) {
-            $data_item = array(
-                'id' => $tweet->id,
-                'created_at' => $tweet->created_at,
-                'text' => $this->selectTweetContent($tweet),
-                'user' => $tweet->user,
-                'retweet_count' => $tweet->retweet_count,
-                'favorite_count' => $tweet->favorite_count,
-                'entities' => $tweet->entities,
-                'favorited' => $tweet->favorited,
-                'retweeted' => $tweet->retweeted
-            );
+                $data[] = $data_item;
+            }
 
-            array_push($data, $data_item);
+            return $data;
         }
 
-        return $data;
+        return null;
     }
 }

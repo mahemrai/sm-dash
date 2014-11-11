@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 date_default_timezone_set('UTC');
 
-require __DIR__ . '/../config/database.php';
 require __DIR__ . '/../vendor/autoload.php';
 
 class Slim_Framework_TestCase extends PHPUnit_Framework_TestCase {
