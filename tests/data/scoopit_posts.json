@@ -1,0 +1,20 @@
+[
+    {
+        "reactionsCount" : "2",
+        "commentsCount" : "6",
+        "title" : "Topic 1",
+        "mediumImageUrl" : "http://test.com/image/img1.jpg",
+        "publicationDate" : "1415837490",
+        "url" : "http://test.com/test-topic-1",
+        "thanksCount" : "5"
+    },
+    {
+        "reactionsCount" : "1",
+        "commentsCount" : "0",
+        "title" : "Topic 2",
+        "mediumImageUrl" : "http://test.com/image/img2.jpg",
+        "publicationDate" : "1415837490",
+        "url" : "http://test.com/test-topic-2",
+        "thanksCount" : "2"
+    }
+]

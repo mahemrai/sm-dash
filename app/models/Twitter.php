@@ -191,9 +191,9 @@ class Twitter {
     }
 
     /**
-     * Description
-     * @param type $tweets
-     * @return type
+     * Extract tweets from the json response received from Twitter
+     * @param object $tweets
+     * @return array | null
      */
     public function extractData($tweets) {
         if (!empty($tweets)) {

@@ -142,47 +142,51 @@ class Scoopit {
     /**
      * Extract posts from the json response received from Scoop.it.
      * @param object $posts 
-     * @return array
+     * @return array | null
      */
-    private function extractPosts($posts) {
-        $data = array();
+    public function extractPosts($posts) {
+        if (!empty($posts)) {
+            foreach($posts as $post) {
+                $data_item = array(
+                    'reactionsCount' => $post->reactionsCount,
+                    'commentsCount' => $post->commentsCount,
+                    'title' => $post->title,
+                    'image' => (isset($post->mediumImageUrl)) ? $post->mediumImageUrl : null,
+                    'publicationDate' => date('Y-m-d', $post->publicationDate),
+                    'url' => (isset($post->url)) ? $post->url : null,
+                    'thanksCount' => $post->thanksCount
+                );
 
-        foreach($posts as $post) {
-            $data_item = array(
-                'reactionsCount' => $post->reactionsCount,
-                'commentsCount' => $post->commentsCount,
-                'title' => $post->title,
-                'image' => (isset($post->mediumImageUrl)) ? $post->mediumImageUrl : null,
-                'publicationDate' => date('Y-m-d', $post->publicationDate),
-                'url' => (isset($post->url)) ? $post->url : null,
-                'thanksCount' => $post->thanksCount
-            );
+                $data[] = $data_item;
+            }
 
-            array_push($data, $data_item);
+            return $data;
         }
 
-        return $data;
+        return null;
     }
 
     /**
      * Extract topics from the json response received from Scoop.it.
      * @param object $topics 
-     * @return array
+     * @return array | null
      */
-    protected function extractTopics($topics) {
-        $data = array();
+    public function extractTopics($topics) {
+        if (!empty($topics)) {
+            foreach($topics as $topic) {
+                $data_item = array(
+                    'id' => $topic->id,
+                    'name' => $topic->name,
+                    'short_name' => $topic->shortName
+                );
 
-        foreach($topics as $topic) {
-            $data_item = array(
-                'id' => $topic->id,
-                'name' => $topic->name,
-                'short_name' => $topic->shortName
-            );
+                $data[] = $data_item;
+            }
 
-            array_push($data, $data_item);
+            return $data;
         }
 
-        return $data;
+        return null;
     }
 }
 ?>
