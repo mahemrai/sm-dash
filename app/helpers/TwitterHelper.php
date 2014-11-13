@@ -2,6 +2,7 @@
 /**
  * Twig_Extension_TwitterHelper class
  * @package helpers
+ * @uses Twig_Extension
  * @author Mahendra Rai
  */
 

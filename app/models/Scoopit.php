@@ -124,6 +124,7 @@ class Scoopit {
 
     /**
      * Construct api configuration from the data retrieved from YAML config file.
+     * @param array $api_config
      * @return array
      */
     private function getConfig($api_config) {
@@ -189,4 +190,3 @@ class Scoopit {
         return null;
     }
 }
-?>

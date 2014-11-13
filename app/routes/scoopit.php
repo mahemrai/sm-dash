@@ -1,5 +1,12 @@
 <?php
 /**
+ * Scoopit related routes for handling login, authentication
+ * and loading topics dynamically.
+ * @package routes
+ * @author Mahendra Rai
+ */
+
+/**
  * Authorise user and log them to their Scoopit account.
  */
 $app->get('/scoopit/login', function() use ($app) {

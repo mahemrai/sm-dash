@@ -26,6 +26,7 @@ class Twitter {
 
     /**
      * Get home timeline tweets from Twitter.
+     * @param string $url
      * @return array
      */
     public function getHomeTimeline($url) {
@@ -40,6 +41,7 @@ class Twitter {
 
     /**
      * Get user tweets from Twitter.
+     * @param string $url
      * @return array
      */
     public function getUserTimeline($url) {
@@ -167,6 +169,7 @@ class Twitter {
 
     /**
      * Construct api information from the config data retrived from YAML file.
+     * @param array $api_config
      * @return array
      */
     public function getApiInfo($api_config) {
