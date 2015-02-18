@@ -77,7 +77,7 @@ function replaceHashtags($text, $entity) {
     foreach($entity as $item) {
         $manipulated_string = str_ireplace(
             '#'.$item->text, 
-            '<a href="http://twitter.com/search?q=%23'.$item->text.'&src=hash" target="_blank">#'.$item->text.'</a>', 
+            '<a href="http://twitter.com/search?q=%23'.$item->text.'&src=hash" target="_blank"><span class="label label-info">#'.$item->text.'</span></a>', 
             $manipulated_string
         );
     }

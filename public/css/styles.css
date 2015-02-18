@@ -5806,6 +5806,37 @@ div.well span.metric {
   display: block;
   color: #7f8c8d;
 }
+div.well a.btn-sm {
+  background-color: #ddd;
+  border-color: #ddd;
+  color: #4f4f4f;
+}
+div.well a.btn-sm:hover {
+  background-color: #abb7b7;
+  border-color: #abb7b7;
+  color: #fff;
+}
+div.well .btn-twitter {
+  background-color: #55acee;
+  border-color: #55acee;
+  color: #fff;
+  margin-top: 10px;
+}
+div.well .btn-twitter:hover {
+  background-color: #ddd;
+  border-color: #ddd;
+  color: #4f4f4f;
+}
+div.well .load-topic {
+  background-color: #6cab36;
+  border-color: #6cab36;
+  color: #fff;
+}
+div.well .load-topic:hover {
+  background-color: #ddd;
+  border-color: #ddd;
+  color: #4f4f4f;
+}
 div.well div#header div img {
   margin-right: 10px;
 }
